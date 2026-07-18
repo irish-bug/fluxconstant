@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <filter id="bloom-wide" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="bloom-mid" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+  </defs>
+
+  <circle cx="60" cy="60" r="52" fill="#0d1312"/>
+
+  <g filter="url(#bloom-wide)" opacity="0.55">
+    <circle cx="60" cy="60" r="30" fill="none" stroke="#e8a33d" stroke-width="18"/>
+    <line x1="60" y1="20" x2="60" y2="100" stroke="#e8a33d" stroke-width="18" stroke-linecap="round"/>
+  </g>
+
+  <g filter="url(#bloom-mid)" opacity="0.8">
+    <circle cx="60" cy="60" r="30" fill="none" stroke="#f2c572" stroke-width="11.3"/>
+    <line x1="60" y1="20" x2="60" y2="100" stroke="#f2c572" stroke-width="11.3" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="60" cy="60" r="30" fill="none" stroke="#fff8ea" stroke-width="5.7"/>
+  <line x1="60" y1="20" x2="60" y2="100" stroke="#fff8ea" stroke-width="5.7" stroke-linecap="round"/>
+</svg>
