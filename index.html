@@ -442,6 +442,7 @@ function revealPhone() {
   var header = document.getElementById('site-header');
   var mainTitle = document.getElementById('main-title');
   var introText = "FLUX CONSTANT LABS";
+  var alreadyPlayed = sessionStorage.getItem('introPlayed');
 
   function typeInto(el, text, onDone) {
     var i = 0;
@@ -464,13 +465,14 @@ function revealPhone() {
     step();
   }
 
-  if (reduced) {
+  if (reduced || alreadyPlayed) {
     overlay.style.display = 'none';
     header.classList.add('visible');
     mainTitle.classList.add('visible');
-    startWaveSignature();
     return;
   }
+
+  sessionStorage.setItem('introPlayed', '1');
 
   setTimeout(function () {
     typeInto(introTitle, introText, function () {
@@ -489,7 +491,6 @@ function revealPhone() {
             overlay.style.opacity = '0';
             setTimeout(function () {
               overlay.remove();
-              startWaveSignature();
             }, 400);
           }, 700);
         }, 900);
