@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flux Constant Labs — ICS Security &amp; Agentic AI Architecture</title>
+<meta name="description" content="Flux Constant Labs — industrial control systems security and agentic AI architecture. Golden, Colorado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500&family=Lexend+Exa:wght@400;500;600&family=Lexend+Mega:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1312;
+    --bg-panel: #131c1a;
+    --line: #24312e;
+    --text: #e9e6dd;
+    --text-dim: #8c968f;
+    --accent: #c9922e;
+    --accent-dim: #7a6335;
+    --radius: 3px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lexend Deca', -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* --- Header --- */
+  header {
+    padding: 36px 0 0;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .wordmark-name {
+    font-family: 'Lexend Mega', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+
+  .wordmark-loc {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* --- Hero --- */
+  .hero {
+    padding: 64px 0 8px;
+  }
+
+  .signature {
+    width: 100%;
+    max-width: 420px;
+    height: 72px;
+    margin-bottom: 40px;
+    display: block;
+  }
+
+  .signature path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  .eyebrow {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Lexend Exa', sans-serif;
+    font-weight: 600;
+    font-size: clamp(30px, 4.8vw, 46px);
+    line-height: 1.15;
+    color: var(--text);
+    max-width: 14ch;
+  }
+
+  .subhead {
+    margin-top: 26px;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    max-width: 46ch;
+  }
+
+  .subhead strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* --- Divider --- */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 72px 0 0;
+  }
+
+  /* --- Practice areas --- */
+  .practice {
+    padding: 56px 0 8px;
+  }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 36px;
+  }
+
+  @media (max-width: 620px) {
+    .practice-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  .practice-item {
+    border-left: 2px solid var(--line);
+    padding-left: 20px;
+  }
+
+  .practice-item h2 {
+    font-family: 'Lexend Exa', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .practice-item p {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* --- Footer / contact --- */
+  footer {
+    padding: 72px 0 48px;
+  }
+
+  .contact-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .contact-label {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .contact-email {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 16px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease;
+  }
+
+  .contact-email:hover { border-color: var(--accent); }
+
+  .contact-loc {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .footer-fine {
+    margin-top: 56px;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 11px;
+    color: var(--accent-dim);
+  }
+
+  .contact-phone-reveal {
+    background: none;
+    border: none;
+    padding: 0 0 2px;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 16px;
+    color: var(--accent);
+    border-bottom: 1px dashed var(--accent-dim);
+    cursor: pointer;
+  }
+
+  .contact-phone-reveal:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="wordmark-name">Flux Constant Labs</span>
+      <span class="wordmark-loc">Golden, Colorado</span>
+    </div>
+  </header>
+
+  <main class="hero">
+    <svg class="signature" viewBox="0 0 420 72" aria-hidden="true">
+      <path id="sig-path" d=""></path>
+    </svg>
+
+    <span class="eyebrow">ICS Security &amp; Agentic AI Architecture</span>
+
+    <h1>The constant inside every system in flux.</h1>
+
+    <p class="subhead">
+      <strong>Flux Constant Labs</strong> works at the intersection of industrial control systems security and agentic AI architecture — building systems engineered for oversight, not just automation.
+    </p>
+  </main>
+
+  <hr class="divider">
+
+  <section class="practice">
+    <span class="eyebrow">Practice Areas</span>
+
+    <div class="practice-grid">
+      <div class="practice-item">
+        <h2>Industrial Control Systems</h2>
+        <p>Security assessment, hardening, and architecture for SCADA and OT environments — where failure is not an acceptable outcome.</p>
+      </div>
+      <div class="practice-item">
+        <h2>Agentic AI Systems</h2>
+        <p>Auditable, local-first architectures for autonomous systems — memory and context that can be inspected, not just trusted.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="contact-row">
+      <div>
+        <div class="contact-label">Get in touch</div>
+        <button class="contact-phone-reveal" id="email-reveal" onclick="revealEmail()">Show email</button>
+        <div class="contact-label" style="margin-top:18px;">Phone</div>
+        <button class="contact-phone-reveal" id="phone-reveal" onclick="revealPhone()">Show number</button>
+      </div>
+      <div class="contact-loc">Golden, Colorado</div>
+    </div>
+    <div class="footer-fine">FLUX CONSTANT LABS LLC</div>
+  </footer>
+
+</div>
+
+<script>
+function revealEmail() {
+  var user = 'info';
+  var domain = ['fluxconstant', 'com'];
+  var address = user + '@' + domain.join('.');
+  var link = document.createElement('a');
+  link.className = 'contact-email';
+  link.href = 'mailto:' + address;
+  link.textContent = address;
+  document.getElementById('email-reveal').replaceWith(link);
+}
+
+function revealPhone() {
+  var parts = ['949', '424', '3589'];
+  var display = '(' + parts[0] + ') ' + parts[1] + '-' + parts[2] + ' (4AI-FLUX)';
+  var link = document.createElement('a');
+  link.className = 'contact-phone-reveal';
+  link.style.borderBottom = 'none';
+  link.href = 'tel:+1' + parts.join('');
+  link.textContent = display;
+  document.getElementById('phone-reveal').replaceWith(link);
+}
+
+(function () {
+  var path = document.getElementById('sig-path');
+  var w = 420, h = 72, midY = 40;
+  var points = 60;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function buildPath(amplitude, phase) {
+    var d = '';
+    for (var i = 0; i <= points; i++) {
+      var x = (w / points) * i;
+      var t = (i / points) * Math.PI * 4 + phase;
+      var damp = 1 - (i / points);
+      var y = midY + Math.sin(t) * amplitude * damp;
+      d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    }
+    return d;
+  }
+
+  if (reduced) {
+    path.setAttribute('d', buildPath(0, 0));
+    return;
+  }
+
+  var start = null;
+  var duration = 2600;
+
+  function frame(ts) {
+    if (!start) start = ts;
+    var elapsed = ts - start;
+    var progress = Math.min(elapsed / duration, 1);
+    var ease = 1 - Math.pow(1 - progress, 3);
+    var amplitude = 16 * (1 - ease);
+    path.setAttribute('d', buildPath(amplitude, elapsed / 260));
+    if (progress < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      path.setAttribute('d', buildPath(0, 0));
+    }
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
