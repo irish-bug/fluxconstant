@@ -42,9 +42,9 @@
   }
 
   .wrap {
-    max-width: 860px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 28px;
+    padding: 0 40px;
   }
 
   /* --- Header --- */
@@ -87,21 +87,6 @@
     padding: 64px 0 8px;
   }
 
-  .signature {
-    width: 100%;
-    max-width: 420px;
-    height: 72px;
-    margin-bottom: 40px;
-    display: block;
-  }
-
-  .signature path {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-  }
-
   .eyebrow {
     font-family: 'Lexend Exa', sans-serif;
     font-size: 12px;
@@ -117,7 +102,11 @@
     font-size: clamp(30px, 4.8vw, 46px);
     line-height: 1.15;
     color: var(--text);
-    max-width: 14ch;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    h1 { white-space: normal; }
   }
 
   .subhead {
@@ -126,7 +115,6 @@
     font-size: 17px;
     line-height: 1.65;
     color: var(--text-dim);
-    max-width: 46ch;
   }
 
   .subhead strong {
@@ -258,10 +246,6 @@
   </header>
 
   <main class="hero">
-    <svg class="signature" viewBox="0 0 420 72" aria-hidden="true">
-      <path id="sig-path" d=""></path>
-    </svg>
-
     <span class="eyebrow">Cyber-Physical Systems &amp; Agentic AI Architecture</span>
 
     <h1>Your constant for a system in flux.</h1>
@@ -333,49 +317,6 @@ function revealPhone() {
   link.textContent = display;
   document.getElementById('phone-reveal').replaceWith(link);
 }
-
-(function () {
-  var path = document.getElementById('sig-path');
-  var w = 420, h = 72, midY = 40;
-  var points = 60;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function buildPath(amplitude, phase) {
-    var d = '';
-    for (var i = 0; i <= points; i++) {
-      var x = (w / points) * i;
-      var t = (i / points) * Math.PI * 4 + phase;
-      var damp = 1 - (i / points);
-      var y = midY + Math.sin(t) * amplitude * damp;
-      d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
-    }
-    return d;
-  }
-
-  if (reduced) {
-    path.setAttribute('d', buildPath(0, 0));
-    return;
-  }
-
-  var start = null;
-  var duration = 2600;
-
-  function frame(ts) {
-    if (!start) start = ts;
-    var elapsed = ts - start;
-    var progress = Math.min(elapsed / duration, 1);
-    var ease = 1 - Math.pow(1 - progress, 3);
-    var amplitude = 16 * (1 - ease);
-    path.setAttribute('d', buildPath(amplitude, elapsed / 260));
-    if (progress < 1) {
-      requestAnimationFrame(frame);
-    } else {
-      path.setAttribute('d', buildPath(0, 0));
-    }
-  }
-
-  requestAnimationFrame(frame);
-})();
 </script>
 
 </body>
