@@ -4,26 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Shane McFly | fluxconstant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500&family=Lexend+Exa:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f1115; --panel:#161922; --ink:#e8eaf0; --muted:#9aa3b2;
-  --accent:#4fd1c5; --rule:#252a36; --link:#7dd3fc;
-}
-@media (prefers-color-scheme: light){
-  :root{ --bg:#fbfbfd; --panel:#fff; --ink:#1a1d25; --muted:#5b6472;
-         --accent:#0d7d72; --rule:#e3e6ec; --link:#0b6ea8; }
+  --bg:#0d1312; --panel:#131c1a; --ink:#e9e6dd; --muted:#8c968f;
+  --accent:#c9922e; --accent-dim:#7a6335; --rule:#24312e; --link:#c9922e;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
- font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;}
+ font:16px/1.65 'Lexend Deca',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
 .wrap{max-width:820px;margin:0 auto;padding:56px 24px 96px}
 header{border-bottom:2px solid var(--accent);padding-bottom:22px;margin-bottom:14px}
-h1{font-size:2.5rem;line-height:1.1;margin:0 0 6px;letter-spacing:-.02em}
-.role{color:var(--accent);font-weight:600;font-size:1.05rem;margin:0 0 10px}
+h1{font-family:'Lexend Exa',sans-serif;font-weight:600;font-size:2.5rem;line-height:1.1;margin:0 0 6px;letter-spacing:-.02em}
+.role{color:var(--accent);font-weight:500;font-size:1.05rem;margin:0 0 10px}
 .meta{color:var(--muted);font-size:.92rem;margin:0}
 .meta a{color:var(--link);text-decoration:none}
 .meta a:hover{text-decoration:underline}
-h2{font-size:.82rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);
+.email-reveal{background:none;border:none;padding:0 0 1px;margin:0;font:inherit;color:var(--link);
+  border-bottom:1px dashed var(--accent-dim);cursor:pointer}
+.email-reveal:hover{border-bottom-color:var(--accent)}
+.email-revealed{color:var(--link);text-decoration:none;border-bottom:1px solid var(--accent-dim);padding-bottom:1px}
+.email-revealed:hover{border-bottom-color:var(--accent)}
+h2{font-family:'Lexend Exa',sans-serif;font-size:.82rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);
    margin:44px 0 14px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
 h3{font-size:1.02rem;margin:22px 0 3px}
 .sub{color:var(--muted);font-size:.9rem;margin:0 0 9px}
@@ -37,8 +41,8 @@ li{margin-bottom:9px}
 .pub .a{color:var(--muted);font-size:.89rem;display:block}
 .pub a{color:var(--link);text-decoration:none;font-size:.85rem}
 .pub a:hover{text-decoration:underline}
-.first{display:inline-block;background:var(--accent);color:var(--bg);font-size:.66rem;
-  font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px;
+.first{display:inline-block;background:var(--accent);color:var(--bg);font-family:'Lexend Exa',sans-serif;font-size:.66rem;
+  font-weight:600;letter-spacing:.06em;padding:2px 7px;border-radius:3px;
   vertical-align:2px;margin-left:7px;text-transform:uppercase}
 .yr{display:inline-block;min-width:52px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
 .talk{display:flex;gap:12px;margin-bottom:11px;align-items:baseline}
@@ -59,7 +63,7 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
   <h1>Shane McFly</h1>
   <p class="role">Founder, Flux Constant Labs &middot; Cybersecurity Architect &amp; Principal Investigator</p>
   <p class="meta">Critical infrastructure &middot; Industrial control systems &middot; Cyber-physical security<br>
-  Golden, Colorado &middot; <a href="mailto:shane@fluxconstant.com">shane@fluxconstant.com</a></p>
+  Golden, Colorado &middot; <button class="email-reveal" id="email-reveal" onclick="revealEmail()">Show email</button></p>
 </header>
 
 <p class="lede">I spend my time on a narrow question with wide consequences: how do you engineer physical infrastructure so that a cyber attack can't turn into a blackout, a spill, or a shutdown?</p>
@@ -232,5 +236,17 @@ footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
 
 <footer>fluxconstant.com &middot; Shane McFly</footer>
 </div>
+<script>
+function revealEmail() {
+  var user = 'shane';
+  var domain = ['fluxconstant', 'com'];
+  var address = user + '@' + domain.join('.');
+  var link = document.createElement('a');
+  link.className = 'email-revealed';
+  link.href = 'mailto:' + address;
+  link.textContent = address;
+  document.getElementById('email-reveal').replaceWith(link);
+}
+</script>
 </body>
 </html>
