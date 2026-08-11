@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Shane McFly | fluxconstant</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#161922; --ink:#e8eaf0; --muted:#9aa3b2;
+  --accent:#4fd1c5; --rule:#252a36; --link:#7dd3fc;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#fbfbfd; --panel:#fff; --ink:#1a1d25; --muted:#5b6472;
+         --accent:#0d7d72; --rule:#e3e6ec; --link:#0b6ea8; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:820px;margin:0 auto;padding:56px 24px 96px}
+header{border-bottom:2px solid var(--accent);padding-bottom:22px;margin-bottom:14px}
+h1{font-size:2.5rem;line-height:1.1;margin:0 0 6px;letter-spacing:-.02em}
+.role{color:var(--accent);font-weight:600;font-size:1.05rem;margin:0 0 10px}
+.meta{color:var(--muted);font-size:.92rem;margin:0}
+.meta a{color:var(--link);text-decoration:none}
+.meta a:hover{text-decoration:underline}
+h2{font-size:.82rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);
+   margin:44px 0 14px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
+h3{font-size:1.02rem;margin:22px 0 3px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 9px}
+p{margin:0 0 14px}
+.lede{font-size:1.08rem}
+ul{margin:0 0 14px;padding-left:20px}
+li{margin-bottom:9px}
+.pub{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--accent);
+     border-radius:5px;padding:13px 16px;margin-bottom:11px}
+.pub .t{font-weight:600;display:block;margin-bottom:3px}
+.pub .a{color:var(--muted);font-size:.89rem;display:block}
+.pub a{color:var(--link);text-decoration:none;font-size:.85rem}
+.pub a:hover{text-decoration:underline}
+.first{display:inline-block;background:var(--accent);color:var(--bg);font-size:.66rem;
+  font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:3px;
+  vertical-align:2px;margin-left:7px;text-transform:uppercase}
+.yr{display:inline-block;min-width:52px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.talk{display:flex;gap:12px;margin-bottom:11px;align-items:baseline}
+.talk .body{flex:1}
+.talk em{color:var(--ink);font-style:italic}
+.talk .v{color:var(--muted);font-size:.9rem;display:block}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+.tag{background:var(--panel);border:1px solid var(--rule);border-radius:20px;
+     padding:4px 12px;font-size:.82rem;color:var(--muted)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
+       color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Shane McFly</h1>
+  <p class="role">Cybersecurity Architect &amp; Principal Investigator</p>
+  <p class="meta">Critical infrastructure &middot; Industrial control systems &middot; Cyber-physical security<br>
+  Golden, Colorado &middot; <a href="mailto:shane@fluxconstant.com">shane@fluxconstant.com</a></p>
+</header>
+
+<p class="lede">I spend my time on a narrow question with wide consequences: how do you engineer physical infrastructure so that a cyber attack can't turn into a blackout, a spill, or a shutdown?</p>
+
+<p>For seven years I worked at the National Laboratory of the Rockies — formerly NREL — as a Senior Cybersecurity Researcher and Principal Investigator, a DOE federally funded research and development center. I led the Network and Communication Pillar of <strong>Liberty Eclipse</strong>, a DOE CESER full-scale national exercise validating grid recovery across highly distributed systems. I architected the <strong>ARIES Cyber Range</strong> into a high-fidelity environment capable of emulating multi-owner power systems and regional grids, so that defenses could be tested against representative infrastructure instead of simplified test beds.</p>
+
+<p>Alongside that, I've spent a decade teaching. Graduate coursework at the Colorado School of Mines, professional training through the DOE OCIO-funded Cyber Fire Foundry program, and hands-on challenges at DEF CON's ICS Village. I care about the pipeline as much as the technology — the hardest problem in this field is not finding a vulnerability, it's producing engineers who design systems where the vulnerability doesn't matter.</p>
+
+<div class="tags">
+  <span class="tag">ICS / SCADA</span><span class="tag">Cyber-Informed Engineering</span>
+  <span class="tag">DNP3 &middot; Modbus &middot; IEC 61850</span><span class="tag">Grid resilience</span>
+  <span class="tag">Distributed energy resources</span><span class="tag">Embedded systems security</span>
+  <span class="tag">Cyber ranges &amp; emulation</span><span class="tag">Network forensics</span>
+</div>
+
+<h2>Publications</h2>
+
+<h3>Peer-Reviewed</h3>
+<div class="pub"><span class="t">Alerga: Alert Aggregation and Reasoning in GOOSE Simulation Pipeline</span>
+<span class="a">Battista, J., Nahrstedt, K., Valdes, A., McFly, S. — 2023 IEEE International Conference on Communications, Control, and Computing Technologies for Smart Grids (SmartGridComm), 2023</span>
+<a href="https://doi.org/10.1109/SmartGridComm57358.2023.10333915">doi.org/10.1109/SmartGridComm57358.2023.10333915</a></div>
+
+<div class="pub"><span class="t">Flock: A Framework for Alert Aggregation and Reasoning in GOOSE Messages</span>
+<span class="a">Battista, J., Nahrstedt, K., Valdes, A., McFly, S. — University of Illinois at Urbana-Champaign, 2022</span></div>
+
+<div class="pub"><span class="t">A Graph-Based Analysis of Industrial Control Systems Network Traffic</span>
+<span class="a">Palmer, I., Rogers, E., McFly, S. — International Journal of Industrial Control Systems Security, 2020. Presented at HotSoS, 2019.</span></div>
+
+<h3>National Laboratory Reports &amp; Federal Guidance</h3>
+<div class="pub"><span class="t">Distributed Energy Resource Visual Emulator: Phase 1<span class="first">First author</span></span>
+<span class="a">McFly, S., Peterson, J., Cryar, R., Reynolds, T. — National Renewable Energy Laboratory, 2023</span>
+<a href="https://doi.org/10.2172/1922814">doi.org/10.2172/1922814</a></div>
+
+<div class="pub"><span class="t">Distributed Energy Resource Cybersecurity Framework and Cyber Range Integration<span class="first">First author</span></span>
+<span class="a">McFly, S., Peterson, J., Reynolds, T. — National Renewable Energy Laboratory, 2022</span>
+<a href="https://doi.org/10.2172/1868050">doi.org/10.2172/1868050</a></div>
+
+<div class="pub"><span class="t">Cyber-Informed Engineering Implementation Guide</span>
+<span class="a">Wright, V. L., Meng, J. P., Anderson, R. S., … McFly, S., et al. — Idaho National Laboratory / U.S. Department of Energy, 2023. Report INL/RPT-23-74072.</span>
+<a href="https://www.osti.gov/biblio/1995796">osti.gov/biblio/1995796</a></div>
+
+<div class="pub"><span class="t">Cyber-Informed Engineering (CIE) Curriculum Guide</span>
+<span class="a">Lampe, B. R., Cole, D., McFly, S., Casey, O. B., et al. — Idaho National Laboratory, 2024</span></div>
+
+<div class="pub"><span class="t">CIE Curriculum Guide, Version 2.0</span>
+<span class="a">Lampe, B. R., Lyons, W., Zonouz, S., … McFly, S., et al. — Idaho National Laboratory</span>
+<a href="https://doi.org/10.2172/3006953">doi.org/10.2172/3006953</a></div>
+
+<div class="pub"><span class="t">Cyber-Informed Engineering Adoption in University Engineering Programs: An Overview of CIE Integration Successes at Nine U.S. Educational Institutions</span>
+<span class="a">Lampe, B., Huang, E., Cole, D., McFly, S., et al. — Idaho National Laboratory, 2024</span>
+<a href="https://doi.org/10.2172/2478666">doi.org/10.2172/2478666</a></div>
+
+<h3>Acknowledged Contribution</h3>
+<div class="pub"><span class="t">Advanced Grid Operational Technology Edge-Level Threat Detection</span>
+<span class="a">Hupp, W., Hasandka, A., Singh, V. K., Baniahmed, S. A. — National Renewable Energy Laboratory, 2023. <em>Acknowledged contributor — built the hardware-in-the-loop test system used for this research.</em></span>
+<a href="https://doi.org/10.2172/1960418">doi.org/10.2172/1960418</a></div>
+
+<h2>Speaking &amp; Panels</h2>
+
+<div class="talk"><span class="yr">2025</span><div class="body">
+  <strong>Aggregation and Grid Security Workshop</strong>
+  <span class="v">Led Focus Sessions 3 &amp; 4 — Ensuring Continuity &amp; Aggregator Roles</span></div></div>
+
+<div class="talk"><span class="yr">2025</span><div class="body">
+  <strong>Cybersecurity for Operational Technology</strong> — panelist
+  <span class="v">2nd Annual ICS/SCADA Cybersecurity Symposium</span></div></div>
+
+<div class="talk"><span class="yr">2024</span><div class="body">
+  <em>Where's Waldo? Find the Raspberry Pi in the Cyber Defense Exercise</em>
+  <span class="v">ICS Village, DEF CON</span></div></div>
+
+<div class="talk"><span class="yr">2024</span><div class="body">
+  <em>Scaling to Secure the Clean Energy Transition through Cyber Defense Exercises</em>
+  <span class="v">DOE Energy Transition Summit, Arlington, VA</span></div></div>
+
+<div class="talk"><span class="yr">2024</span><div class="body">
+  <em>Engineering-In Cyber</em> — co-presented with Virginia Wright, Idaho National Laboratory
+  <span class="v">Hack the Capitol 7.0, May 30–31, 2024. Also taught Cyber-Informed Engineering at Workforce Development Day — a half-day curriculum in which teams reasoned through the consequences of a threat bypassing controls on a municipal water system.</span></div></div>
+
+<div class="talk"><span class="yr">2024</span><div class="body">
+  <em>A Day in the Life of a [National Lab Researcher]</em> — invited lecture
+  <span class="v">Information Trust Institute / Coordinated Science Laboratory, University of Illinois Urbana-Champaign</span></div></div>
+
+<div class="talk"><span class="yr">2023</span><div class="body">
+  <em>Renewable Energy Expertise as Context for Satellite Intelligence</em> — lightning talk
+  <span class="v">GEOINT Symposium, St. Louis, MO</span></div></div>
+
+<div class="talk"><span class="yr">2023</span><div class="body">
+  <strong>Cyber Across the Federal Government</strong> — panelist
+  <span class="v">University of Colorado Colorado Springs, March 2, 2023. Panel with Chris Inglis, former U.S. National Cyber Director, and federal cybersecurity leaders, on cybersecurity careers in government. <a href="https://uccs1.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=977739c0-dce0-4121-bb9e-afbd016aaf9b">Recording</a></span></div></div>
+
+<div class="talk"><span class="yr">2023</span><div class="body">
+  <em>Fear and Loathing on Plum Island</em> — panel
+  <span class="v">ICS Village, DEF CON</span></div></div>
+
+<div class="talk"><span class="yr">2022</span><div class="body">
+  <em>Reskilling to Close the Cyber Workforce Gap</em>
+  <span class="v">DOE Cybersecurity and Technology Innovation Conference, Portland, OR</span></div></div>
+
+<div class="talk"><span class="yr">2022</span><div class="body">
+  <strong>Operational Technology Security Track</strong> — panelist
+  <span class="v">DOE Cybersecurity and Technology Innovation Conference, Portland, OR</span></div></div>
+
+<div class="talk"><span class="yr">2017</span><div class="body">
+  <em>OT Network Monitoring Fundamentals</em> — lead presenter
+  <span class="v">CREDC Summer School</span></div></div>
+
+<div class="talk"><span class="yr">2016</span><div class="body">
+  <em>Containing Vulnerabilities in Containers</em>
+  <span class="v">Cyber Defense &amp; Disaster Recovery Conference — Docker security in embedded environments</span></div></div>
+
+<div class="talk"><span class="yr">2015</span><div class="body">
+  <em>Maintaining Privacy on Social Media</em>
+  <span class="v">Crypto &amp; Privacy Village, DEF CON</span></div></div>
+
+<h2>Teaching &amp; Curriculum</h2>
+
+<h3>Colorado School of Mines — Adjunct Faculty, Computer Science</h3>
+<p class="sub">2020 – Present</p>
+<p>Graduate coursework in system security, SCADA architectures, and network forensics. Designed a hands-on laboratory series in which students build, instrument, and secure cyber-physical system simulations end to end.</p>
+
+<h3>Cyber Fire Foundry — Instructor &amp; Curriculum Developer</h3>
+<p class="sub">2023 – Present &middot; DOE OCIO-funded</p>
+<ul>
+  <li>Developed the curriculum and training systems for the program's OT Security course.</li>
+  <li>Architected the containerized interactive challenge platform used to deliver hands-on scenarios to professional cyber operators.</li>
+  <li>Built the <strong>Integrated Grid Incident Recovery Challenge</strong> — deployed at DEF CON ICS Village 2025, BSides Denver 2025, Cyber Fire Foundry 2025-2, and Cyber Fire Foundry London 2026.</li>
+  <li>Built an <strong>Agentic ICS Incident Recovery Challenge</strong> for DEF CON ICS Village 2026.</li>
+</ul>
+
+<h3>Parkland College — Faculty, Computer Science &amp; Technologies</h3>
+<p class="sub">2017 – 2019</p>
+<p>Linux systems administration, cybersecurity, and networking fundamentals.</p>
+
+<h3>Professional Training</h3>
+<ul>
+  <li><strong>Security Plus Data Science</strong> — two-day training, NOLACON. Co-developed and co-taught with Imani Palmer (2022); delivered solo (2023).</li>
+  <li><strong>DEF CON ICS Village (2017)</strong> — co-presented a control-system training exercise with Matt Luallen of CybatiWorks.</li>
+  <li><strong>DOE CyberForce Competition</strong> — led the laboratory initiative supporting the national collegiate cyber defense competition.</li>
+</ul>
+
+<h2>Village Leadership</h2>
+<ul>
+  <li><strong>DEF CON ICS Village</strong> (2023–2026) — content sponsor and challenge designer. Hack the Wind Turbines (2023, 2024), Integrated Grid Incident Recovery Challenge (2025), Agentic ICS Incident Recovery Challenge (2026).</li>
+  <li><strong>DEF CON Ethics Village</strong> (2018, 2019, 2021) — founder and chairperson. Established the village and hosted international workshops on ethical challenges in information security and privacy.</li>
+</ul>
+
+<h2>Advisory &amp; Service</h2>
+<ul>
+  <li><strong>Colorado School of Mines — CCSP Industry Advisory Board.</strong> Industry board member helping shape curriculum, with guest lecturing on cybersecurity for physical systems.</li>
+  <li><strong>DER Cybersecurity Framework (DER-CF) core team.</strong> Led integration of the DER-CF with NREL's ARIES Cyber Range, producing the Distributed Energy Resource Visual Emulator.</li>
+</ul>
+
+<h2>Experience</h2>
+<h3>National Laboratory of the Rockies (formerly NREL)</h3>
+<p class="sub">Senior Cybersecurity Researcher &amp; Principal Investigator &middot; 2019 – 2026 &middot; DOE FFRDC</p>
+<h3>University of Illinois — Information Trust Institute</h3>
+<p class="sub">Research System Administrator &middot; 2017 – 2019 &middot; DARPA RADICS, grid black-start recovery</p>
+<h3>Boeing Research &amp; Technology</h3>
+<p class="sub">Systems &amp; Networks Research Engineer &middot; 2015 – 2016 &middot; Embedded avionics network security</p>
+
+<h2>Education &amp; Recognition</h2>
+<ul>
+  <li>M.S. Computer Science, University of Illinois at Urbana-Champaign</li>
+  <li>B.S. Computer Science, University of Illinois at Urbana-Champaign</li>
+  <li>Doctoral coursework in Computer Science, Colorado School of Mines (paused 2024)</li>
+  <li>NREL President's Award (2022); Key Contributor Award (2022, 2023)</li>
+  <li>Illinois Cyber Security Scholars Program (CyberCorps SFS); Hites Endowment</li>
+</ul>
+
+<footer>fluxconstant.com &middot; Shane McFly</footer>
+</div>
+</body>
+</html>

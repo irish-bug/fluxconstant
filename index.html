@@ -178,6 +178,28 @@
     text-transform: uppercase;
   }
 
+  .wordmark-nav {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
   /* --- Hero --- */
   .hero {
     padding: 64px 0 8px;
@@ -351,7 +373,10 @@
         <img src="logo-mark-final.svg" alt="" width="40" height="40" id="header-logo-icon">
         <span class="wordmark-name">Flux Constant Labs</span>
       </div>
-      <span class="wordmark-loc">Golden, Colorado</span>
+      <nav class="wordmark-nav">
+        <a href="about.html" class="nav-link">About</a>
+        <span class="wordmark-loc">Golden, Colorado</span>
+      </nav>
     </div>
   </header>
 
