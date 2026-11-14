@@ -630,6 +630,28 @@
       noteTimer = setTimeout(function () { pill.classList.remove("noting"); }, 7000);
     };
 
+    // Start at the top of the opening, not at the prompt. Vorple scrolls its output to the
+    // bottom when the first prompt appears (and again while it settles), so once the prompt
+    // is there, hold the scroll at the top for a moment -- unless the player scrolls or types.
+    (function startAtTop() {
+      var t0 = Date.now(), held = false, stop = false;
+      function quit() { stop = true; }
+      document.addEventListener("keydown", quit, { once: true, capture: true });
+      document.addEventListener("wheel", quit, { once: true, capture: true, passive: true });
+      document.addEventListener("touchstart", quit, { once: true, capture: true, passive: true });
+      (function tick() {
+        if (stop || Date.now() - t0 > 15000) return;
+        var box = document.getElementById("vorple"), out = document.getElementById("output");
+        // the prompt element exists before the opening is printed: wait for the text itself
+        if (box && document.getElementById("lineinput") && out && out.textContent.length > 400) {
+          if (!held) { held = Date.now(); }
+          box.scrollTop = 0;
+          if (Date.now() - held > 1500) return;
+        }
+        requestAnimationFrame(tick);
+      })();
+    })();
+
     window.grokFeed("train");
   }
 
