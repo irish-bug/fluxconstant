@@ -106,7 +106,7 @@
   var db = null, uid = null, canSave = !!LOG_URL, saving = null, dirty = false, saveTimer = 0;
   function changed(soon) {
     dirty = true;
-    if (!canSave) return;
+    if (!canSave || window.grokRestoring) return;   // a restore replaying (grok-save.js): wait for it
     clearTimeout(saveTimer);
     saveTimer = setTimeout(save, soon ? 1500 : 15000);
   }
@@ -143,7 +143,7 @@
       furthest: s.furthest, outcome: run.outcome, reached: run.reached,
       commandCount: run.commands.length, notUnderstood: s.misses.length,
       commands: run.commands, name: run.name, feedback: feedbackText(),
-      hiddenThoughts: run.hidden || 0
+      hiddenThoughts: run.hidden || 0, restored: run.restored || 0
     };
     if (LOG_URL) {
       saving = post(body, leaving).then(function (ok) { saving = null; if (!ok) dirty = true; return ok; });
@@ -162,6 +162,25 @@
     return saving;
   }
   window.addEventListener("pagehide", function () { if (dirty) save(true); });
+  // a save the player made (grok-save.js): a copy for the author, a row of its own in the
+  // Sheet's saves tab. "of", not "run": an older Code.gs turns it away instead of
+  // overwriting this run's row with it.
+  document.addEventListener("grok-saved", function (e) {
+    var s = e.detail;
+    if (!LOG_URL || !s) return;
+    post({ kind: "save", of: run.id, furthest: summary().furthest, name: run.name, v: s.v,
+      saved: s.saved, serial: s.serial, score: s.score, prompt: s.prompt, lines: s.lines }, false);
+  });
+  // a restored save (grok-save.js): its commands become this run's, marked as replayed
+  document.addEventListener("grok-restored", function (e) {
+    var got = (e.detail && e.detail.lines) || [];
+    run.commands = got.filter(function (l) { return typeof l === "string"; }).slice(-400)
+      .map(function (l) { return { c: l.trim().slice(0, 120), t: secs(), r: "restored" }; });
+    run.restored = got.length;
+    // the replay can finish before watchOutput is attached: read the whole transcript
+    scan(((document.getElementById("output") || {}).textContent) || "");
+    changed(true);
+  });
   (async function connect() {
     if (LOG_URL || !window.claude || !window.claude.use) return;
     try {

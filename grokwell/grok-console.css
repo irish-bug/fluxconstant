@@ -246,3 +246,45 @@ body:has(#device-feed.full) #og-toggle,body:has(#device-feed.full) #thoughts-tog
 body.grok.og #grok-tab{font-family:'Consolas',ui-monospace,monospace; color:#c9f5d6; background:#0a100c; border-color:#1f9c4d}
 body:has(#device-feed.full) #grok-tab{display:none}
 @media (prefers-reduced-motion:reduce){ #grok-tab{transition:none} }
+
+/* --- Save menu and the restore screen (grok-save.js; left set by grokHudAdd) --- */
+#grok-save{
+  position:fixed; top:.5rem; left:10rem; z-index:60;
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif; font-size:.72rem; letter-spacing:.02em;
+  color:#1c1b17; background:#fff; border:1px solid #d4cfc2; border-radius:999px;
+  padding:.28rem .72rem; cursor:pointer; white-space:nowrap;
+}
+#grok-save:hover{border-color:#1c1b17}
+#grok-save:focus-visible,#grok-save-menu button:focus-visible,#grok-restore button:focus-visible{outline:2px solid #1f7a70; outline-offset:2px}
+#grok-save-menu{
+  position:fixed; top:2.5rem; left:.5rem; z-index:75; width:min(19rem, calc(100vw - 1.2rem));
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif; color:#1c1b17; background:#fffdf8;
+  border:1px solid #d4cfc2; border-radius:12px; padding:.8rem .9rem; box-shadow:0 .8rem 2.4rem rgba(0,0,0,.18);
+}
+#grok-save-menu[hidden],#grok-restore[hidden],#grok-restore [hidden]{display:none !important}
+#grok-save-menu .gs-actions{display:flex; gap:.5rem; flex-wrap:wrap}
+#grok-save-menu button{font:inherit; font-size:.8rem; cursor:pointer; border:1px solid #d4cfc2; background:transparent; color:#1c1b17; border-radius:8px; padding:.4rem .8rem}
+#grok-save-menu #gs-down{background:#1f7a70; border-color:#1f7a70; color:#fff; font-weight:600}
+#grok-save-menu #gs-down:disabled{opacity:.45; cursor:default}
+#grok-save-menu .gs-note{margin:.55rem 0 0; font-size:.8rem; min-height:1.1em}
+#grok-save-menu .gs-fine{margin:.3rem 0 0; font-size:.7rem; line-height:1.45; color:#5d5a51}
+#grok-restore{
+  position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,253,248,.94); font-family:'Lexend','Helvetica Neue',Arial,sans-serif; color:#1c1b17;
+}
+#grok-restore .gr-box{width:min(24rem, calc(100vw - 2rem)); text-align:center}
+#grok-restore h2{margin:0 0 .8rem; font-size:1.05rem; font-weight:600}
+#grok-restore .gr-bar{height:.4rem; border-radius:999px; background:#e8e3d6; overflow:hidden}
+#grok-restore .gr-bar i{display:block; height:100%; width:0; background:#1f7a70; transition:width .2s}
+#grok-restore p{margin:.7rem 0 0; font-size:.85rem; line-height:1.45; color:#5d5a51}
+#grok-restore button{margin-top:1rem; font:inherit; font-size:.85rem; cursor:pointer; border:1px solid #1f7a70; background:#1f7a70; color:#fff; border-radius:8px; padding:.45rem 1.1rem; font-weight:600}
+body.grok.og #grok-save{color:#1fe05a; background:#0a100c; border-color:#1f9c4d; font-family:'Consolas',ui-monospace,monospace}
+body.grok.og #grok-save-menu{color:#c9f5d6; background:#0a100c; border-color:#1f9c4d}
+body.grok.og #grok-save-menu button{color:#c9f5d6; border-color:#1f9c4d}
+body.grok.og #grok-save-menu #gs-down{background:#1fe05a; border-color:#1fe05a; color:#04140a}
+body.grok.og #grok-save-menu .gs-fine{color:#7fbf93}
+body.grok.og #grok-restore{background:rgba(5,8,6,.95); color:#c9f5d6}
+body.grok.og #grok-restore p{color:#7fbf93}
+body.grok.og #grok-restore .gr-bar{background:#14301d}
+body.grok.og #grok-restore .gr-bar i,body.grok.og #grok-restore button{background:#1fe05a; border-color:#1fe05a; color:#04140a}
+body:has(#device-feed.full) #grok-save,body:has(#device-feed.full) #grok-save-menu{display:none}

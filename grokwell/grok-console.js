@@ -640,7 +640,7 @@
       document.addEventListener("wheel", quit, { once: true, capture: true, passive: true });
       document.addEventListener("touchstart", quit, { once: true, capture: true, passive: true });
       (function tick() {
-        if (stop || Date.now() - t0 > 15000) return;
+        if (stop || window.grokRestoring || Date.now() - t0 > 15000) return;   // a restore ends at the bottom
         var box = document.getElementById("vorple"), out = document.getElementById("output");
         // the prompt element exists before the opening is printed: wait for the text itself
         if (box && document.getElementById("lineinput") && out && out.textContent.length > 400) {
