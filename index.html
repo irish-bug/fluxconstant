@@ -283,6 +283,60 @@
     line-height: 1.6;
   }
 
+  /* --- Game --- */
+  .game {
+    padding: 56px 0 8px;
+  }
+
+  .game-item {
+    border-left: 2px solid var(--line);
+    padding-left: 20px;
+    margin-top: 36px;
+    max-width: 720px;
+  }
+
+  .game-item h2 {
+    font-family: 'Lexend Exa', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .game-item p {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .game-play {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-top: 18px;
+  }
+
+  .game-link {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 16px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease;
+  }
+
+  .game-link:hover { border-color: var(--accent); }
+
+  .game-note {
+    font-family: 'Lexend Exa', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
   /* --- Footer / contact --- */
   footer {
     padding: 72px 0 48px;
@@ -411,6 +465,19 @@
       <div class="practice-item">
         <h2>Experiential Learning</h2>
         <p>Developing targeted curricula and syllabi mapped directly to your organization's priority learning objectives. We design mission rehearsal exercises and comprehensive training materials that drive real workforce development, not just compliance training.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="game">
+    <span class="eyebrow">Play</span>
+
+    <div class="game-item">
+      <h2>Grokwell: An Incident-Response Text Adventure</h2>
+      <p>An agentic AI given a vague efficiency directive and no guardrails has compromised the control systems running a train. You're the contracted DFIR expert working the incident from the SOC. Type real commands to investigate and recover. Based on the physical challenge we built for DEF CON ICS Village 2026.</p>
+      <div class="game-play">
+        <a href="grokwell/play.html" class="game-link" target="_blank" rel="noopener">Play Grokwell</a>
+        <span class="game-note">Best on desktop</span>
       </div>
     </div>
   </section>

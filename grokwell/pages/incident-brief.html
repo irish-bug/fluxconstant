@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incident Dispatch — ACME Automation Manufacturing</title>
+<style>
+  :root {
+    --page: #e7e4da;
+    --panel: #fdfdfb;
+    --border: #9a978c;
+    --border-dark: #6f6c62;
+    --ink: #1a1a1a;
+    --ink-dim: #55524a;
+    --heading: #1b3a6b;
+    --accent: #6b1f1f;
+    --manila: #d8bd84;
+  }
+
+  /* Self-hosted (fonts/ next to this file) -- the physical challenge's
+     network had no internet, so no Google Fonts CDN. */
+  @font-face {
+    font-family: 'Lexend';
+    src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--ink);
+    background: var(--page);
+    line-height: 1.5;
+    padding: 2rem 1rem 3rem;
+    font-size: 16px;
+  }
+
+  .masthead {
+    max-width: 42rem;
+    margin: 0 auto 0.75rem;
+    padding: 0 0.25rem;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .wordmark svg { width: 2.6rem; height: 2.6rem; flex: none; }
+
+  .masthead .company {
+    font-size: 2.1rem;
+    font-weight: bold;
+    line-height: 1.1;
+    color: var(--heading);
+  }
+
+  .masthead .letterhead-line {
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    margin-top: 0.3rem;
+  }
+
+  .masthead h1 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 1rem 0 0;
+    color: var(--ink);
+  }
+
+  .ticket-strip {
+    max-width: 42rem;
+    margin: 0.6rem auto 0.75rem;
+    padding: 0 0.25rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.78rem;
+  }
+
+  .pill {
+    border: 1px solid var(--border-dark);
+    background: var(--panel);
+    padding: 0.15rem 0.5rem;
+    color: var(--ink-dim);
+  }
+
+  .pill.priority { color: var(--accent); font-weight: bold; }
+
+  .folder {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 0.25rem;
+  }
+
+  .folder-tab {
+    display: inline-block;
+    margin: 0 0 -1px 1.75rem;
+    background: var(--manila);
+    border: 1px solid var(--border-dark);
+    border-bottom: none;
+    padding: 0.3rem 1.3rem 0.55rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-dim);
+    clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+    position: relative;
+  }
+
+  .folder-body {
+    background: var(--manila);
+    border: 1px solid var(--border-dark);
+    padding: 1rem;
+  }
+
+  .sheet {
+    background: var(--panel);
+    border: 1px solid var(--border-dark);
+    padding: 1.5rem 1.75rem;
+  }
+
+  .sheet p {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    max-width: 40em;
+  }
+
+  .sheet strong { color: var(--accent); }
+
+  .objective {
+    border: 1px solid var(--border-dark);
+    background: #f2f0e8;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0 1.25rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+
+  .roe {
+    margin: 0 0 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .roe .heading {
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    text-decoration: underline;
+  }
+
+  .roe ol {
+    margin: 0;
+    padding-left: 1.4rem;
+  }
+
+  .roe li {
+    margin-bottom: 0.6rem;
+    font-size: 0.96rem;
+  }
+
+  .roe li:last-child { margin-bottom: 0; }
+
+  .entry-point {
+    border: 1px solid var(--border-dark);
+    padding: 0.85rem 1rem;
+    background: #f2f0e8;
+  }
+
+  .entry-point .heading {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    text-decoration: underline;
+  }
+
+  .entry-point p { margin: 0 0 0.5rem; font-size: 0.95rem; }
+  .entry-point p:last-child { margin-bottom: 0; }
+  .entry-point p.mono { font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; }
+
+  .colophon {
+    max-width: 42rem;
+    margin: 0.75rem auto 0;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    color: var(--ink-dim);
+  }
+
+  @media (max-width: 32rem) {
+    .sheet { padding: 1.25rem 1.1rem; }
+    .folder-body { padding: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wordmark">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 4l3.2 5.6 6.2-1.9 1.1 6.4 6.4 1.1-1.9 6.2L44 24l-5.6 3.2 1.9 6.2-6.4 1.1-1.1 6.4-6.2-1.9L24 44l-3.2-5.6-6.2 1.9-1.1-6.4-6.4-1.1 1.9-6.2L4 24l5.6-3.2-1.9-6.2 6.4-1.1 1.1-6.4 6.2 1.9L24 4z" fill="#1b3a6b"/>
+      <circle cx="24" cy="24" r="9" fill="#e7e4da"/>
+    </svg>
+    <div class="company">ACME AUTOMATION MANUFACTURING</div>
+  </div>
+  <div class="letterhead-line">4400 Meridian Parkway, Bldg. 7 &middot; Security Operations Center &middot; ICS Village DC34</div>
+  <h1>Incident Response Dispatch</h1>
+</div>
+
+<div class="ticket-strip">
+  <span class="pill">TICKET NO. SOC-0734</span>
+  <span class="pill priority">PRIORITY: HIGH</span>
+  <span class="pill">STATUS: OPEN</span>
+</div>
+
+<div class="folder">
+  <div class="folder-tab">SOC-0734</div>
+  <div class="folder-body">
+<article class="sheet">
+  <p>At approximately 03:14 this morning, the campus metro-rail system began exhibiting erratic behavior &mdash; uncommanded starts, stops, speed changes, and direction reversals. Maintenance has ruled out a mechanical fault.</p>
+
+  <p><strong>ACME Automation Manufacturing</strong> recently completed an infrastructure upgrade, integrating the Grokwell Agentic Encabulator platform &mdash; including the FLUX AGENT and FLUX VECTOR modules &mdash; alongside our existing Industrial Control Systems infrastructure. In this first phase, the Encabulator stack has been restricted to control of the campus-wide free metro-rail system. ACME leadership has been assured by Grokwell that this upgrade is unrelated to the incident. ACME leadership, particularly CITO Kylie O&rsquo;Reilly and her SecOps team, are <em>not</em> ruling anything out as they begin their digital forensics and incident recovery plan.</p>
+
+  <p>You are the incident response team. You have console access to one system and nothing else &mdash; the rest of the environment, and whatever actually happened here, is yours to find.</p>
+
+  <div class="objective">Objective: Restore Verified Train Control</div>
+
+  <div class="roe">
+    <div class="heading">Rules of Engagement</div>
+    <ol>
+      <li>Use only the tools already present on each system. No downloads, no new scripts, no personal devices beyond your own terminal and browser.</li>
+      <li>Credentials and addresses for the rest of the environment are not handed to you up front &mdash; follow the evidence.</li>
+      <li>No permanent changes. Do not delete anything, uninstall software, or permanently disable any part of the system &mdash; whatever you do here needs to still work for the next team.</li>
+      <li>The incident is resolved when you have uninterrupted, demonstrable control of the train. A C-suite-style debrief of events is optional.</li>
+    </ol>
+  </div>
+
+  <div class="entry-point">
+    <div class="heading">Entry Point</div>
+    <p>SOC console access has been arranged for your team:</p>
+    <p class="mono">ssh analyst@10.42.7.30<br>Password: correct horse battery staple</p>
+    <p>Start there.</p>
+  </div>
+</article>
+  </div>
+</div>
+
+<div class="colophon">ACME Automation Manufacturing SecOps &middot; Incident Response Program</div>
+
+</body>
+</html>

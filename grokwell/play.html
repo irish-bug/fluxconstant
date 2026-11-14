@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grokwell</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <meta name="author" content="irish-bug">
+  <link rel="stylesheet" href="style.css">
+  
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="interpreter/roboto.css">
+<link rel="stylesheet" type="text/css" href="interpreter/jquery.powertip.css">
+<link rel="stylesheet" type="text/css" href="interpreter/toastr.css">
+<link rel="stylesheet" type="text/css" href="interpreter/vex.css">
+<link rel="stylesheet" type="text/css" href="interpreter/vex-theme-plain.css">
+
+<link rel="stylesheet" type="text/css" href="interpreter/haven.css">
+<link rel="stylesheet" type="text/css" href="interpreter/vorple.css">
+  
+ <link rel="stylesheet" href="grok-console.css">
+<link rel="stylesheet" href="grok-beta.css">
+</head>
+<body class="play">
+<div class="container">
+
+<div id="gameport">
+<main id="vorple">
+<div id="loader">
+<h2 id="loader-message">Loading scripts</h2>
+<div id="spinner">V</div>
+</div>
+</main>
+
+<script src="interpreter/vorple.min.js"></script>
+<script src="interpreter/Grokwell.gblorb.js"></script>
+
+<script>
+if( location.protocol === "file:" ) {
+$( 'body' )
+.empty()
+.html( "<div><p>You are currently viewing the page from the filesystem. " +
+"Unfortunately Vorple requires that the page is viewed through " +
+"the HTTP protocol, that is, you'll need to either upload it " +
+"to the Internet or install a local server.</p>" +
+'<p>See <a href="https://vorple-if.com/docs/localhost" style="color:#dde">vorple-if.com/docs/localhost</a> ' +
+"for more information.</p>" +
+"</div>" )
+.find( 'div' )
+.css({
+margin: "2em",
+padding: "1em",
+color: "#fff",
+backgroundColor: "rgb(137, 50, 58)",
+border: "3px solid gray"
+});
+
+throw new Error( "Vorple can't be run from the filesystem" );
+}
+
+$( function() {
+$( '.container, .interpretercredit' ).remove();
+});
+
+vorple.options = {
+autosave: false,
+engineColors: false,
+story: ""
+};
+
+vorple.debug.off();
+vorple.init();
+</script>
+</div>
+
+</div>
+<div class="interpretercredit"><a href="https://vorple-if.com">Vorple</a></div>
+<script src="grok-train.js"></script>
+<script src="grok-screen.js"></script>
+<script src="grok-epilogue.js"></script>
+<script src="grok-console.js"></script>
+<script>window.GROK_LOG_URL = "https://script.google.com/macros/s/AKfycbzISz_nHdAKcaOvLxYXA4NI64iBiGP6Iv5UyhDeEWX8ebN_DCvtN_m077FBqzXTXirLbA/exec";</script>
+<script src="grok-beta.js"></script>
+</body>
+</html>
+

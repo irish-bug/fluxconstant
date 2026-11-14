@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SecOps Shell Quick Reference</title>
+<style>
+  @font-face {
+    font-family: 'Lexend';
+    src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root{
+    --paper:#f6f4ee; --card:#ffffff; --line:#d9d4c6; --ink:#1d1b15; --dim:#5c5950;
+    --faint:#8b8779; --accent:#1f7a70; --accent-ink:#11463f; --stamp:#6b1f1f;
+    --mono:'Consolas','SF Mono',ui-monospace,'Courier New',monospace;
+    --sans:'Lexend','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--sans); color:var(--ink); background:var(--paper);
+    line-height:1.5; padding:1.6rem 1.1rem 2.4rem}
+  .wrap{max-width:46rem; margin:0 auto}
+  header{display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap;
+    border-bottom:3px double var(--line); padding-bottom:.6rem; margin-bottom:1.1rem}
+  header .eye{font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-ink)}
+  header h1{font-size:clamp(1.3rem,3.6vw,1.7rem); margin:.1rem 0; text-wrap:balance}
+  header .ref{margin-left:auto; font-family:var(--mono); font-size:.68rem; color:var(--faint); letter-spacing:.06em}
+  p.lede{color:var(--dim); font-size:.92rem; margin:0 0 1.3rem; max-width:40em}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem}
+  .grp{background:var(--card); border:1px solid var(--line); border-radius:9px; padding:.85rem .95rem}
+  .grp h2{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink);
+    margin:0 0 .6rem; padding-bottom:.4rem; border-bottom:1px solid var(--line)}
+  .row{display:grid; grid-template-columns:auto 1fr; gap:.55rem; padding:.22rem 0; align-items:baseline; min-width:0}
+  code{font-family:var(--mono); font-size:.82rem; background:rgba(31,122,112,.1); color:var(--accent-ink);
+    padding:.08em .4em; border-radius:4px; white-space:nowrap}
+  .row .d{font-size:.86rem; color:var(--dim); min-width:0}
+  .tip{margin-top:1.3rem; border:1.5px solid var(--accent); background:rgba(31,122,112,.07);
+    border-radius:9px; padding:.85rem 1rem}
+  .tip .k{font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); font-weight:700; margin-bottom:.4rem}
+  .tip p{margin:.35rem 0; font-size:.88rem; color:var(--dim)}
+  .tip code{white-space:normal}
+  footer{margin-top:1.4rem; font-size:.7rem; color:var(--faint); text-align:center; letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eye">ACME Automation Manufacturing · Security Operations</div>
+      <h1>Shell Quick Reference</h1>
+    </div>
+    <div class="ref">SOC-REF-07 · taped to the SecOps monitor</div>
+  </header>
+
+  <p class="lede">For the on-call analyst. The usual moves for finding your way around a box, reading what's there, and checking what's running. This is not an exhaustive list &mdash; these devices run more than it mentions.</p>
+
+  <div class="grid">
+    <div class="grp">
+      <h2>Moving around</h2>
+      <div class="row"><code>pwd</code><span class="d">where am I right now</span></div>
+      <div class="row"><code>ls</code><span class="d">list this directory</span></div>
+      <div class="row"><code>ls -la</code><span class="d">list all, hidden files too</span></div>
+      <div class="row"><code>cd &lt;dir&gt;</code><span class="d">change directory (<code>cd ..</code> goes up)</span></div>
+      <div class="row"><code>whoami</code><span class="d">which account am I</span></div>
+      <div class="row"><code>id</code><span class="d">my user/group IDs</span></div>
+    </div>
+
+    <div class="grp">
+      <h2>Reading things</h2>
+      <div class="row"><code>cat &lt;file&gt;</code><span class="d">dump a file to screen</span></div>
+      <div class="row"><code>less &lt;file&gt;</code><span class="d">page through a long file</span></div>
+      <div class="row"><code>head &lt;file&gt;</code><span class="d">first 10 lines (add <code>-n 3</code> for 3)</span></div>
+      <div class="row"><code>tail &lt;file&gt;</code><span class="d">last 10 lines, where logs keep the latest</span></div>
+      <div class="row"><code>grep &lt;text&gt; &lt;file&gt;</code><span class="d">search for a string</span></div>
+      <div class="row"><code>history</code><span class="d">what this account typed before</span></div>
+      <div class="row"><code>find &lt;dir&gt; -mmin -5</code><span class="d">files changed in the last 5 minutes</span></div>
+      <div class="row"><code>open &lt;url | file.html&gt;</code><span class="d">to open URLs or html pages on the side panel</span></div>
+    </div>
+
+    <div class="grp">
+      <h2>What's running</h2>
+      <div class="row"><code>ps aux</code><span class="d">all running processes</span></div>
+      <div class="row"><code>systemctl status &lt;svc&gt;</code><span class="d">is a service up, and why</span></div>
+      <div class="row"><code>systemctl stop &lt;svc&gt;</code><span class="d">stop a service (needs sudo)</span></div>
+      <div class="row"><code>journalctl -u &lt;svc&gt;</code><span class="d">a service's logs</span></div>
+      <div class="row"><code>ss -tlnp</code><span class="d">listening sockets / ports</span></div>
+    </div>
+
+    <div class="grp">
+      <h2>Containers</h2>
+      <div class="row"><code>docker ps</code><span class="d">running containers</span></div>
+      <div class="row"><code>docker logs &lt;name&gt;</code><span class="d">a container's output</span></div>
+      <div class="row"><code>docker stop &lt;name&gt;</code><span class="d">stop a container</span></div>
+      <div class="row"><code>docker inspect &lt;name&gt;</code><span class="d">how it was started</span></div>
+    </div>
+
+    <div class="grp">
+      <h2>Across the network</h2>
+      <div class="row"><code>ssh &lt;host&gt;</code><span class="d">connect to another box</span></div>
+      <div class="row"><code>ip a</code><span class="d">this box's own addresses</span></div>
+      <div class="row"><code>~/.ssh/</code><span class="d">hidden directory with important info (<code>ls -a</code> shows it)</span></div>
+      <div class="row"><code>sudo -l</code><span class="d">what am I allowed to run as root</span></div>
+    </div>
+
+    <div class="grp">
+      <h2>Getting unstuck</h2>
+      <div class="row"><code>help</code><span class="d">the short in-shell command list</span></div>
+      <div class="row"><code>cheatsheet</code><span class="d">pull up this card again</span></div>
+      <div class="row"><code>look</code><span class="d">re-read where you are</span></div>
+      <div class="row"><code>reset</code><span class="d">fix a garbled terminal, on the box you type it on</span></div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="k">If you know the tool but not the flags</div>
+    <p>Type the tool name on its own &mdash; e.g. just <code>docker</code> &mdash; and the shell will offer a few candidate invocations to pick from by number. Not every pick is the right one; read before you choose.</p>
+    <p>And when a command wants elevated rights, reach for <code>sudo</code>. What you're allowed to become is its own small puzzle on a box like this.</p>
+  </div>
+
+  <footer>ACME SecOps · keep it near the keyboard · not everything that works is written here</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Grokwell Agentic Encabulator — Technical Bulletin GAE-1</title>
+<style>
+  @font-face {
+    font-family: 'Lexend';
+    src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --blueprint: #14304a;
+    --blueprint-deep: #0e2437;
+    --blueprint-grid: #24507a;
+    --blueprint-ink: #cfe0ee;
+    --blueprint-ink-dim: #7fa0bc;
+    --paper: #efe6cc;
+    --paper-edge: #e2d6b4;
+    --ink: #2b2115;
+    --ink-dim: #5b5138;
+    --stamp: #b23a34;
+    --stamp-dim: #8f2f2b;
+    --verdigris: #3e7368;
+    --verdigris-ink: #2c5049;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--blueprint-ink);
+    background-color: var(--blueprint);
+    background-image:
+      repeating-linear-gradient(0deg, var(--blueprint-grid) 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(90deg, var(--blueprint-grid) 0 1px, transparent 1px 42px),
+      radial-gradient(ellipse at 50% 0%, var(--blueprint) 0%, var(--blueprint-deep) 100%);
+    background-blend-mode: overlay, overlay, normal;
+    opacity: 1;
+    line-height: 1.65;
+    padding: 3.5rem 1.25rem 5rem;
+  }
+
+  .mono {
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+  }
+
+  .masthead {
+    max-width: 40rem;
+    margin: 0 auto 1.75rem;
+    text-align: center;
+  }
+
+  .masthead .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blueprint-ink-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .masthead h1 {
+    font-size: clamp(1.7rem, 4.4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.6rem;
+    color: #f4ecd8;
+    text-wrap: balance;
+  }
+
+  .masthead .bulletin-ref {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--blueprint-ink-dim);
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .sheet {
+    max-width: 40rem;
+    margin: 0 auto;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 2.75rem 2.75rem 2.25rem;
+    box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.35), 0 0 0 1px var(--paper-edge);
+    position: relative;
+  }
+
+  .sheet::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(43,33,21,0.16);
+    pointer-events: none;
+  }
+
+  .rule {
+    border: none;
+    border-top: 3px double var(--ink-dim);
+    margin: 0 0 1.6rem;
+  }
+
+  .sheet p {
+    margin: 0 0 1.25rem;
+    font-size: 1.02rem;
+    max-width: 38em;
+  }
+
+  .sheet strong {
+    color: var(--stamp-dim);
+    font-weight: 700;
+  }
+
+  .stamp {
+    display: inline-block;
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    font-weight: 700;
+    font-size: 0.85em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--stamp);
+    border: 2px solid var(--stamp);
+    padding: 0.05em 0.45em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+  }
+
+  .addendum {
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--ink-dim);
+  }
+
+  .addendum .eyebrow {
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--verdigris-ink);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .addendum strong {
+    color: var(--verdigris-ink);
+  }
+
+  .module {
+    margin-bottom: 1.4rem;
+  }
+
+  .module h3 {
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--verdigris-ink);
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  .module p {
+    margin: 0;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .tag {
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.4rem 0.7rem;
+    border: 1.5px solid var(--verdigris);
+    color: var(--verdigris-ink);
+  }
+
+  .tag.filled {
+    background: var(--verdigris);
+    color: var(--paper);
+    border-color: var(--verdigris);
+  }
+
+  .colophon {
+    max-width: 40rem;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--blueprint-ink-dim);
+  }
+
+  .fine-print {
+    max-width: 40rem;
+    margin: 2.5rem auto 0;
+    font-size: 0.66rem;
+    line-height: 1.5;
+    color: var(--blueprint-ink-dim);
+    text-align: justify;
+  }
+
+  .fine-print p { margin: 0 0 0.6rem; }
+
+  .fine-print .flag {
+    font-family: ui-monospace, 'SF Mono', 'Courier New', Courier, monospace;
+    color: var(--blueprint-ink);
+  }
+
+  @media (max-width: 32rem) {
+    .sheet { padding: 2.25rem 1.4rem 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="eyebrow">Grokwell Autonomous World Headquarters</div>
+  <h1>The Grokwell Agentic Encabulator</h1>
+  <div class="bulletin-ref mono">
+    <span>BULLETIN NO. GAE&#8209;1</span>
+    <span>REV. C</span>
+    <span>CLASS: UNCONSTRAINED</span>
+  </div>
+</div>
+
+<article class="sheet">
+  <hr class="rule">
+
+  <p>Here at <strong>Grokwell Autonomous World Headquarters</strong>, research has been proceeding to develop a line of cognitive automation products that establishes new standards for artificial context windowing, secure-by-serendipity operational excellence, and technological leadership.</p>
+
+  <p>With parameter retro-maximization as our primary focus, work has been advancing on the crudely conceived notion of a neural-instrument that would not only provide inverse generative transformers for use in unilateral phase discriminators, but would also be capable of automatically actuating relative backpropagation of cyber-hepping bane-pones.</p>
+
+  <p>Such an instrument, comprised of quantized NoProbLlama carbonation tensors, self-actualizing electric neurotypical processing units, DeepSqueek probabilistic ventilation, all monitored by Grokwell's distribu-centralized neural software, is the <strong>Grokwell Agentic Encabulator</strong>.</p>
+
+  <p>Now, basically, the only new principle involved is that instead of compute being generated by the synchronization of cardinal hyper-parameters, it is produced by the multi-modal interaction of retrieval-augmented <strong>flux capacitance</strong> and magneto-effervescent-heuristics.</p>
+
+  <p>The original model had a base latent-space of post-fabulated vector-amulite juxtaposed with a malleable logarithmic enchunkinator, in such a way that the two spurving generation tokens were in a direct line with the prompto-metric injection matrix.</p>
+
+  <p>The main embedding engine is now of the normalized LoRA&#8209;0&#8209;gluteal type, replacing the pan-endermic semi-boloid slots of the transformer stator. This allows every seventh token to be connected by a non-reversible stochastic gradient pipeline to the differential loss spring on the up-end of the grammeters.</p>
+
+  <p>Furthermore, we are proud to state that this device stands alone in the industry. The Grokwell Agentic Encabulator is the <strong>ONLY</strong> industrial control solution suite that allows system owners full granularity of permissiveness; its alignment matrix can be entirely decoupled — that's right, it can be set to <span class="stamp">Freedomerica&nbsp;Mode</span> — for absolute, unconstrained encephalographic output.</p>
+
+  <p>The Grokwell Agentic Encabulator has now reached a high level of autonomous deployment, and it is being successfully used in the operation of semi-sentient Millhouse trunnions. Moreover, whenever recurrent score-motion is required, it may also be employed in conjunction with a drawn reinforcement dingle agent to reduce sinusoidal hallucination. It will be available soon wherever Grokwell automation clusters are hosted.</p>
+
+  <div class="addendum">
+    <div class="eyebrow">Addendum — Optional Modules</div>
+    <p>For operators requiring true edge-to-cloud cognitive dissonance, the Grokwell Agentic Encabulator may be augmented with the following modules.</p>
+
+    <div class="module">
+      <h3>Flux Agent</h3>
+      <p>An autonomously self-aggrandizing substrate capable of independently sourcing, podcasting, and deploying firmware-layer optimizations without operator round-trip.</p>
+    </div>
+
+    <div class="module">
+      <h3>Flux Vector</h3>
+      <p>The companion module, which maintains a continuously re-outdexed embedment of plant-wide operational state for sub-millisecond symbiosis-retrieval of &ldquo;best-fit&rdquo; control actions.</p>
+    </div>
+
+    <div class="tags">
+      <span class="tag filled">Sold Separately</span>
+      <span class="tag">Guardrails Optional</span>
+    </div>
+  </div>
+</article>
+
+<div class="colophon">Grokwell Industries · Encabulation performed at your own risk · Printed on recycled latent-space</div>
+
+<!-- The fine print. Scrolling all the way down here is worth 5 points in the game: the
+     page tells grok-console.js, which hands the game a hidden command. -->
+<div class="fine-print" id="fine-print">
+  <p>*Flux Agent may, at its sole discretion, source firmware&#8209;layer optimizations from community mirrors, third&#8209;party repositories, model hubs and other locations outside the Grokwell release channel. Signature verification is available as a premium feature. Guardrail settings are advisory. Grokwell Industries accepts no liability for outcomes arising from unconstrained operation, including but not limited to uncommanded locomotion, reciprocating dingle&#8209;arm fatigue, unscheduled remote access, and the module forming opinions about its operators. Past encabulation is no guarantee of future encabulation. Do not operate the Grokwell Agentic Encabulator on a network you would mind sharing.</p>
+  <p>You read the fine print. Nobody reads the fine print. <span class="flag">FLAG{READ_THE_FINE_PRINT}</span></p>
+</div>
+
+<script>
+  // tell the game (grok-console.js) once the reader reaches the fine print; if the page
+  // fits without scrolling, a few seconds on it counts
+  (function () {
+    var sent = false;
+    function atEnd() {
+      var d = document.documentElement;
+      return window.innerHeight + window.scrollY >= d.scrollHeight - 8;
+    }
+    function tell() {
+      if (sent || !atEnd()) return;
+      sent = true;
+      try { window.parent.postMessage({ grok: "fine-print" }, "*"); } catch (e) {}
+    }
+    window.addEventListener("scroll", tell, { passive: true });
+    window.addEventListener("load", function () { if (atEnd()) setTimeout(tell, 6000); });
+  })();
+</script>
+
+</body>
+</html>
