@@ -46,7 +46,8 @@
 
   var run = {
     id: Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7),
-    started: new Date().toISOString(), commands: [], reached: {}, outcome: "", name: "", feedback: ""
+    started: new Date().toISOString(), commands: [], reached: {}, outcome: "", name: "", feedback: "",
+    notes: []   // each Send adds one (user's call, 2026-11-14: append, never overwrite)
   };
   var t0 = Date.now();
   function secs() { return Math.round((Date.now() - t0) / 1000); }
@@ -109,6 +110,12 @@
     clearTimeout(saveTimer);
     saveTimer = setTimeout(save, soon ? 1500 : 15000);
   }
+  // Every note sent so far, with when; then whatever is typed in the box but not sent yet.
+  function feedbackText() {
+    var parts = run.notes.map(function (n) { return "[" + mins(n.t) + "] " + n.text; });
+    if (run.feedback.trim()) parts.push("[" + mins(secs()) + ", draft] " + run.feedback.trim());
+    return parts.join("\n\n");
+  }
   function summary() {
     var furthest = "Not logged in yet";
     STAGES.forEach(function (s) { if (run.reached[s[0]] !== undefined) furthest = s[1]; });
@@ -135,7 +142,7 @@
       run: run.id, started: run.started, updated: new Date().toISOString(), seconds: secs(),
       furthest: s.furthest, outcome: run.outcome, reached: run.reached,
       commandCount: run.commands.length, notUnderstood: s.misses.length,
-      commands: run.commands, name: run.name, feedback: run.feedback,
+      commands: run.commands, name: run.name, feedback: feedbackText(),
       hiddenThoughts: run.hidden || 0
     };
     if (LOG_URL) {
@@ -179,7 +186,7 @@
     if (s.misses.length) lines.push("Not understood (" + s.misses.length + "): " + s.misses.slice(-25).map(function (c) { return c.c; }).join(" | "));
     if (run.hidden) lines.push("Hard mode: " + run.hidden + " thoughts hidden");
     if (run.name) lines.push("From: " + run.name);
-    if (run.feedback) lines.push("", "Feedback:", run.feedback);
+    if (feedbackText()) lines.push("", "Feedback:", feedbackText());
     lines.push("", "Last commands:");
     run.commands.slice(-40).forEach(function (c) { lines.push("@" + mins(c.t) + "  " + c.c + (c.r && c.r !== "ok" ? "   [" + c.r + "]" : "")); });
     return lines.join("\n");
@@ -250,7 +257,8 @@
   function open() {
     $("gb-notice").hidden = true;
     $("gb-far").textContent = summary().furthest + (run.outcome ? " (" + run.outcome + ")" : "");
-    $("gb-status").textContent = "";
+    var n = run.notes.length;
+    $("gb-status").textContent = n ? "Sent so far: " + n + (n > 1 ? " notes" : " note") + ". Add another any time." : "";
     $("gb-panel").hidden = false;
     setTimeout(function () { $("gb-fb").focus(); }, 0);
   }
@@ -263,10 +271,18 @@
       : "Copy report puts a summary of this run, your notes and your last commands on your clipboard. Paste it into a message to whoever shared the game with you.";
   }
   function send() {
-    run.feedback = $("gb-fb").value.slice(0, 4000); run.name = $("gb-name").value.slice(0, 80);
+    // the box's text becomes a new note and the box empties for the next one
+    var text = $("gb-fb").value.trim().slice(0, 4000);
+    if (text) { run.notes.push({ t: secs(), text: text }); $("gb-fb").value = ""; }
+    $("gb-fb").focus();   // ready for the next note (left on Send, a space would send again)
+    run.feedback = ""; run.name = $("gb-name").value.slice(0, 80);
     dirty = true; $("gb-status").textContent = "Sending…";
     save().then(function (ok) {
-      $("gb-status").textContent = ok ? "Sent. Thank you!" : "Couldn’t send from here. Use Copy report and paste it to whoever shared the game with you.";
+      var n = run.notes.length;
+      $("gb-status").textContent = !ok
+        ? (LOG_URL ? "Couldn’t send just now. It goes with your next command, or use Copy report."
+                   : "Couldn’t send from here. Use Copy report and paste it to whoever shared the game with you.")
+        : n > 1 ? "Sent. That’s " + n + " notes so far. Thank you!" : "Sent. Thank you!";
     });
   }
   function copy() {
