@@ -1,0 +1,248 @@
+/* Grokwell console skin for the Vorple release.
+   Restructures Vorple's #gameport into two panes: the shell (#vorple/#output, left)
+   and a story-driven device-feed panel (#device-feed, right). Injected into the
+   generated play.html by build.sh; see web/grok-console.js for the behaviour. */
+
+@font-face{
+  font-family:'Lexend';
+  src:url('pages/fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+  font-weight:100 900; font-display:swap;
+}
+
+html,body{height:100%}
+body.grok{overflow:hidden}
+
+/* --- two-pane layout --- */
+/* body is the flex container; #device-feed is appended as a body-level sibling of
+   #gameport so Vorple/haven re-rendering #gameport's contents can't wipe it. */
+body.grok{display:flex; align-items:stretch; height:100%; overflow:hidden}
+/* Vorple reparents #vorple to body (dropping #gameport) during init, so size the shell on
+   #vorple directly; order keeps the device feed on the right regardless of DOM order. */
+body.grok #gameport,
+body.grok #vorple{order:1; flex:1.15 1 0; min-width:0; height:100%; overflow:auto; background:#fff}
+body.grok #device-feed{order:2}
+body.grok>div:empty{display:none}
+body.grok #output{
+  max-width:none; margin:0; padding:2.4rem 1.35rem 2rem;
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif;
+  color:#1c1b17; font-size:16px; line-height:1.55;
+}
+/* keep the live input line in the shell font/colour too */
+body.grok #vorple input,
+body.grok #vorple .prompt-input{font-family:inherit !important; color:inherit !important}
+/* ...including the live prompt's own label, which Vorple sets a size larger and black
+   (invisible on the OG view's black) */
+body.grok #vorple #lineinput-prefix{font:inherit !important; color:inherit !important}
+
+/* --- OG terminal skin (green Consolas on black) --- */
+body.grok.og #vorple{background:#050806}
+body.grok.og #output{
+  background:#050806; color:#1fe05a;
+  font-family:'Consolas','SF Mono',ui-monospace,'Courier New',monospace;
+}
+
+/* --- OG toggle, and the "my thoughts" toggle beside it (left set by grok-console.js) --- */
+#og-toggle,#thoughts-toggle{
+  position:fixed; top:.5rem; left:.5rem; right:auto; z-index:60;
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif; font-size:.72rem; letter-spacing:.02em;
+  color:#1c1b17; background:#fff; border:1px solid #d4cfc2; border-radius:999px;
+  padding:.28rem .72rem; cursor:pointer; display:flex; align-items:center; gap:.4rem; white-space:nowrap;
+}
+#thoughts-toggle{left:10rem}
+#og-toggle:hover,#thoughts-toggle:hover{border-color:#1c1b17}
+#og-toggle .sw,#thoughts-toggle .sw{width:.55rem; height:.55rem; border-radius:50%; background:#1c1b17; opacity:.45}
+#thoughts-toggle[aria-pressed="true"] .sw{background:#1f7a70; opacity:1}
+#og-toggle:focus-visible,#thoughts-toggle:focus-visible{outline:2px solid #1f7a70; outline-offset:2px}
+body.grok.og #og-toggle,body.grok.og #thoughts-toggle{color:#1fe05a; background:#0a100c; border-color:#1f9c4d; font-family:'Consolas',ui-monospace,monospace}
+body.grok.og #og-toggle .sw{background:#1fe05a; opacity:1; box-shadow:0 0 .4rem #1fe05a}
+body.grok.og #thoughts-toggle .sw{background:#1fe05a; opacity:.35}
+body.grok.og #thoughts-toggle[aria-pressed="true"] .sw{opacity:1; box-shadow:0 0 .4rem #1fe05a}
+
+/* --- score pill (left is set beside #og-toggle by grok-console.js) --- */
+#grok-score{
+  position:fixed; top:.5rem; left:10rem; z-index:60;
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif; font-size:.72rem; letter-spacing:.02em;
+  color:#1c1b17; background:#fff; border:1px solid #d4cfc2; border-radius:999px;
+  padding:.28rem .72rem; display:flex; align-items:baseline; gap:.35rem; white-space:nowrap;
+}
+#grok-score .k,#grok-score .of{color:#5d5a51}
+#grok-score .n{font-weight:600; font-variant-numeric:tabular-nums}
+#grok-score.bump{animation:grok-bump 1s ease}
+@keyframes grok-bump{
+  0%{border-color:#1f7a70; box-shadow:0 0 0 0 rgba(31,122,112,.5)}
+  60%{border-color:#1f7a70; box-shadow:0 0 0 .4rem rgba(31,122,112,0)}
+}
+#grok-score .note{
+  position:absolute; left:0; top:calc(100% + .4rem); width:max-content;
+  max-width:min(28rem, calc(100vw - 12rem)); white-space:normal;
+  background:#fffdf8; color:#1c1b17; border:1px solid #d4cfc2; border-radius:10px;
+  padding:.45rem .7rem; font-size:.8rem; line-height:1.4; box-shadow:0 .5rem 1.5rem rgba(0,0,0,.12);
+  opacity:0; transform:translateY(-.25rem); transition:opacity .35s ease, transform .35s ease; pointer-events:none;
+}
+#grok-score.noting .note{opacity:1; transform:none}
+#grok-score .note b{color:#1f7a70; margin-right:.4rem}
+#grok-score .note b.minus{color:#b4232c}
+body.grok.og #grok-score{color:#1fe05a; background:#0a100c; border-color:#1f9c4d; font-family:'Consolas',ui-monospace,monospace}
+body.grok.og #grok-score .k,body.grok.og #grok-score .of{color:#7fbf93}
+body.grok.og #grok-score .note{background:#0a100c; color:#c9f5d6; border-color:#1f9c4d}
+body.grok.og #grok-score .note b{color:#1fe05a}
+body.grok.og #grok-score .note b.minus{color:#ff5f56}
+body.grok.og #grok-score.bump{animation-name:grok-bump-og}
+@keyframes grok-bump-og{
+  0%{border-color:#1fe05a; box-shadow:0 0 0 0 rgba(31,224,90,.55)}
+  60%{border-color:#1fe05a; box-shadow:0 0 0 .4rem rgba(31,224,90,0)}
+}
+@media (prefers-reduced-motion:reduce){ #grok-score.bump{animation:none} #grok-score .note{transition:none} }
+
+/* --- device feed panel --- */
+#device-feed{
+  flex:.95 1 0; min-width:0; height:100%; display:flex; flex-direction:column;
+  border-left:1px solid #d4cfc2; background:#0b1216; color:#d6e3ec;
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif;
+}
+#device-feed .cap{
+  display:flex; align-items:center; gap:.5rem; padding:.45rem .85rem;
+  border-bottom:1px solid #243640; background:#101b21;
+  font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:#7f98a6;
+}
+#device-feed .cap .dot{width:.5rem; height:.5rem; border-radius:50%; background:#e8a33d; box-shadow:0 0 .4rem #e8a33d}
+#device-feed .cap.ok .dot{background:#5bbd73; box-shadow:0 0 .4rem #5bbd73}
+#device-feed .cap.warn .dot{background:#e8a33d; box-shadow:0 0 .4rem #e8a33d}
+#device-feed .cap.bad .dot{background:#e0584a; box-shadow:0 0 .4rem #e0584a}
+#device-feed .stage{flex:1; min-height:0; position:relative; overflow:hidden; background:#0b1216}
+#device-feed iframe{width:100%; height:100%; border:0; background:#fff; display:block}
+
+/* train scene */
+#device-feed .scene{position:absolute; inset:0; background:radial-gradient(120% 90% at 50% 10%, #16262e 0%, #0b1216 70%)}
+#device-feed .rail{position:absolute; left:0; right:0; bottom:34%; height:2px; background:#243640}
+#device-feed .tie{position:absolute; bottom:calc(34% - 6px); width:3px; height:12px; background:#1d2d35}
+#device-feed .train{position:absolute; bottom:calc(34% + 1px); left:50%; width:118px; height:46px; will-change:transform; animation:grok-erratic 7s infinite}
+@keyframes grok-erratic{
+  0%{transform:translateX(-120px) scaleX(1)} 12%{transform:translateX(40px) scaleX(1)}
+  18%{transform:translateX(30px) scaleX(1)} 30%{transform:translateX(150px) scaleX(1)}
+  34%{transform:translateX(150px) scaleX(-1)} 46%{transform:translateX(-30px) scaleX(-1)}
+  52%{transform:translateX(-10px) scaleX(-1)} 58%{transform:translateX(-90px) scaleX(-1)}
+  62%{transform:translateX(-90px) scaleX(1)} 80%{transform:translateX(120px) scaleX(1)}
+  88%{transform:translateX(60px) scaleX(1)} 100%{transform:translateX(-120px) scaleX(1)}
+}
+#device-feed .train .body{position:absolute; inset:0 18px 10px 0; background:linear-gradient(#b23a34,#8f2f2b); border-radius:5px 9px 4px 4px}
+#device-feed .train .cab{position:absolute; right:10px; top:4px; width:26px; height:20px; background:#d8bd84; border-radius:3px}
+#device-feed .train .win{position:absolute; top:9px; left:10px; width:46px; height:12px; background:#1a2a30; border-radius:2px; box-shadow:14px 0 0 #1a2a30}
+#device-feed .train .w{position:absolute; bottom:4px; width:14px; height:14px; border-radius:50%; background:#232f35; border:3px solid #3a4a52}
+#device-feed .train .w1{left:14px} #device-feed .train .w2{left:66px}
+#device-feed .scene .caption{position:absolute; left:0; right:0; bottom:10px; text-align:center; color:#7f98a6; font-size:.74rem}
+
+@media (max-width:760px){
+  body.grok{flex-direction:column}
+  body.grok #gameport,
+  body.grok #vorple{flex:1 1 0}
+  body.grok #device-feed{flex:1 1 0; border-left:0; border-top:1px solid #243640}
+}
+@media (prefers-reduced-motion:reduce){ #device-feed .train{animation:none; transform:translateX(0)} }
+
+/* --- device views: PLC write flood, HMI dashboard, AYBABTU --- */
+#device-feed .plc{position:absolute; inset:0; padding:1rem; background:#070b0e; overflow:hidden;
+  font-family:'Consolas','SF Mono',ui-monospace,monospace}
+#device-feed .plc-h{font-size:.72rem; color:#7f98a6; letter-spacing:.08em; margin-bottom:.4rem}
+#device-feed .plc-alert{display:inline-block; font-size:.72rem; color:#0a0d14; background:#e0584a;
+  padding:.15rem .5rem; margin-bottom:.7rem; animation:grok-blink 1s steps(1) infinite}
+@keyframes grok-blink{50%{opacity:.35}}
+#device-feed .regs{display:grid; grid-template-columns:1fr 1fr; gap:.2rem 1rem}
+#device-feed .reg{display:flex; justify-content:space-between; font-size:.86rem; border-bottom:1px dashed #1d2b33; padding:.18rem 0}
+#device-feed .reg .a{color:#7f98a6} #device-feed .reg .v{color:#e8a33d; font-weight:700; font-variant-numeric:tabular-nums}
+#device-feed .plc-log{margin-top:.9rem; white-space:pre; font-size:.72rem; line-height:1.45; color:#5bbd73; opacity:.85}
+
+#device-feed .hmi{position:absolute; inset:0; padding:1rem; background:#0e181d; display:grid;
+  grid-template-columns:1fr 1fr; grid-auto-rows:min-content; gap:.7rem; align-content:start; overflow:auto}
+#device-feed .hmi-top{grid-column:1/-1; display:flex; justify-content:space-between; font-size:.7rem;
+  letter-spacing:.12em; text-transform:uppercase; color:#7f98a6; border-bottom:1px solid #243640; padding-bottom:.4rem}
+#device-feed .hmi .wide{grid-column:1/-1}
+#device-feed .tile{background:#101b21; border:1px solid #243640; border-radius:8px; padding:.75rem .85rem}
+#device-feed .tile .k{font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:#7f98a6}
+#device-feed .tile .v{font-size:1.6rem; font-weight:600; font-variant-numeric:tabular-nums; margin-top:.2rem}
+#device-feed .tile .v.st{font-size:.95rem; color:#e0584a}
+#device-feed .hmi.ok .tile .v.st{color:#5bbd73}
+#device-feed .pills{display:flex; gap:.5rem; margin-top:.5rem}
+#device-feed .pill{flex:1; text-align:center; padding:.55rem; border-radius:6px; font-weight:700; font-size:.85rem;
+  color:#56677a; border:1px solid #243640}
+#device-feed .pill.on{color:#5bbd73; background:rgba(91,189,115,.16); border-color:rgba(91,189,115,.45)}
+#device-feed .hmi:not(.ok) .pill.on{color:#e8a33d; background:rgba(232,163,61,.14); border-color:rgba(232,163,61,.45)}
+#device-feed .gauge{height:10px; border-radius:999px; background:#16242c; overflow:hidden; margin-top:.5rem}
+#device-feed .gauge span{display:block; height:100%; width:0; background:#4fd6c4; transition:width .3s}
+#device-feed .hmi button{font-family:inherit; cursor:pointer; background:none}
+#device-feed .pill{flex:1}
+#device-feed .pill:hover,#device-feed .step:hover,#device-feed .dirv:hover{border-color:#4fd6c4}
+#device-feed .steps{display:flex; gap:.4rem; margin-top:.55rem}
+#device-feed .step{flex:1; padding:.3rem; border-radius:6px; border:1px solid #243640; color:#cdd8e4; font-weight:700}
+#device-feed .dirv{display:block; border:1px solid transparent; border-radius:6px; padding:0 .3rem; margin-left:-.3rem; color:inherit; text-align:left}
+#device-feed .lock{font-size:.62rem; color:#7f98a6; margin-top:.3rem}
+#device-feed .radio{font-size:.78rem; line-height:1.5; margin-top:.35rem; min-height:4.5em; color:#cdd8e4}
+#device-feed .radio .me{color:#7f98a6; font-family:'Consolas','SF Mono',ui-monospace,monospace; font-size:.72rem}
+#device-feed .radio div:not(:first-child){opacity:.6}
+#device-feed .plc-ok{display:inline-block; font-size:.72rem; color:#0a0d14; background:#5bbd73; padding:.15rem .5rem; margin-bottom:.7rem}
+#device-feed .plc.ok .reg .v{color:#5bbd73}
+#device-feed .plc-stall{display:inline-block; font-size:.72rem; color:#0a0d14; background:#e8a33d; padding:.15rem .5rem; margin-bottom:.7rem}
+#device-feed .hmi.stalled .tile .v.st{color:#e8a33d}
+
+#device-feed .ayb{position:absolute; inset:0; background:#000; color:#19e05a; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:.9rem; text-align:center; padding:1rem; overflow:hidden;
+  text-shadow:0 0 6px rgba(25,224,90,.7)}
+/* DarkSeek's laughing loop above the phrase. Transparent background, so he is shown whole
+   (contain, anchored to the top: never crop his head) with no frame -- he's broken into the
+   screen, not playing in a video box. The source clips his hair tips at the top when he
+   throws his head back, so a short top fade dissolves them; a longer bottom fade lets him
+   rise out of the black. Same vertical-hold jitter as the words, in sync with them. */
+#device-feed .ayb .ayb-face{width:100%; aspect-ratio:4/3; max-height:55%; animation:grok-jitter 2.4s steps(1) infinite;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 70%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 70%,transparent 100%)}
+#device-feed .ayb .ayb-face img{display:block; width:100%; height:100%; object-fit:contain;
+  object-position:50% 0; image-rendering:pixelated; filter:drop-shadow(0 0 6px rgba(25,224,90,.35))}
+#device-feed .ayb .jp{font-size:clamp(1.2rem,3.4vw,1.9rem); font-weight:700; letter-spacing:.04em; animation:grok-jitter 2.4s steps(1) infinite}
+@keyframes grok-jitter{0%,92%{transform:none}93%{transform:translateX(-3px)}96%{transform:translateX(4px) skewX(-6deg)}}
+#device-feed .ayb .en{font-family:'Consolas',ui-monospace,monospace; letter-spacing:.22em; text-transform:uppercase; font-size:.95rem}
+#device-feed .ayb .sig{font-family:'Consolas',ui-monospace,monospace; font-size:.7rem; color:#0d9c3d; letter-spacing:.14em}
+#device-feed .ayb .scan{position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 2px,transparent 2px 4px); animation:grok-scan 6s linear infinite}
+@keyframes grok-scan{to{background-position:0 40px}}
+@media (prefers-reduced-motion:reduce){ #device-feed .ayb .ayb-face,#device-feed .ayb .jp,#device-feed .ayb .scan,#device-feed .plc-alert{animation:none} }
+
+/* Flux's sulk: hidden until grokSlow() starts typing it (see grok-console.js) */
+.grok-slow:not(.grok-typed){visibility:hidden}
+@media (prefers-reduced-motion:reduce){.grok-slow{visibility:visible !important}}
+
+/* --- the ending (train-saved): panel grows to full screen, credits, terminal --- */
+#device-feed.ending{transition:left 1.8s cubic-bezier(.6,0,.2,1), top 1.8s cubic-bezier(.6,0,.2,1), width 1.8s cubic-bezier(.6,0,.2,1), height 1.8s cubic-bezier(.6,0,.2,1); background:#000}
+#device-feed.full .cap{display:none}
+#device-feed canvas{transition:filter 1.4s ease}
+#device-feed.credits canvas,#device-feed.credits .ayb>*:not(.scan){filter:blur(9px) brightness(.38) saturate(.8); transition:filter 1.2s ease}
+#device-feed .grok-skip{position:absolute; right:14px; bottom:12px; z-index:5; font:500 .72rem 'Lexend',sans-serif; letter-spacing:.06em;
+  color:#cdd8e4; background:rgba(5,8,13,.55); border:1px solid rgba(205,216,228,.35); border-radius:999px; padding:.3rem .8rem; cursor:pointer; opacity:.55}
+#device-feed .grok-skip:hover,#device-feed .grok-skip:focus-visible{opacity:1}
+#device-feed .grok-credits{position:absolute; inset:0; z-index:3; overflow:hidden; font-family:'Lexend',sans-serif; color:#f4f1e8; text-align:center; pointer-events:none}
+#device-feed .grok-credits .roll{position:absolute; left:0; right:0; top:0; padding:0 8vw; animation:grok-roll 26s linear forwards}
+#device-feed .grok-credits .row{margin:0 0 3.2rem}
+#device-feed .grok-credits .row:first-child .k{font-size:clamp(2rem,6vw,4rem); font-weight:800; letter-spacing:.3em; color:#f8d44c; text-transform:none}
+#device-feed .grok-credits .k{font-size:.78rem; letter-spacing:.24em; text-transform:uppercase; color:#b9c8dc; margin-bottom:.45rem}
+#device-feed .grok-credits .v{font-size:clamp(1.05rem,2.4vw,1.5rem); font-weight:500}
+@keyframes grok-roll{from{transform:translateY(100vh)} to{transform:translateY(-100%)}}
+#device-feed .grok-clip{position:absolute; inset:0; z-index:2; width:100%; height:100%; object-fit:cover; background:transparent; animation:grok-fadein 1.6s ease}   /* the pixels dissolve into footage */
+#device-feed .grok-term{position:absolute; inset:0; z-index:4; background:#020503; color:#1fe05a; padding:5vh 6vw; overflow:hidden;
+  font:400 clamp(.95rem,1.7vw,1.35rem)/1.5 'Consolas','SF Mono',ui-monospace,'Courier New',monospace; text-shadow:0 0 6px rgba(31,224,90,.45); animation:grok-fadein 1.2s ease}
+#device-feed .grok-term pre{margin:0; font:inherit; white-space:pre-wrap}
+#device-feed .grok-term .fin{position:absolute; left:0; right:0; bottom:4vh; text-align:center; font-size:.75em; color:#128a3a; opacity:0; transition:opacity 1.5s ease 2.5s}
+#device-feed .grok-term.done .fin{opacity:1}
+@keyframes grok-fadein{from{opacity:0} to{opacity:1}}
+@media (prefers-reduced-motion:reduce){ #device-feed.ending{transition:none} #device-feed .grok-credits .roll{animation-duration:14s} }
+body:has(#device-feed.full) #og-toggle,body:has(#device-feed.full) #thoughts-toggle,body:has(#device-feed.full) #grok-score{display:none}
+#device-feed .grok-black{position:absolute;inset:0;z-index:4;background:#000}
+#device-feed .grok-screenbox{position:absolute; inset:0; z-index:3; overflow:hidden; pointer-events:none}
+
+/* --- tab completion: the matches, shown for a moment above the prompt --- */
+#grok-tab{position:fixed; left:.5rem; bottom:.6rem; z-index:61; max-width:min(40rem, calc(100vw - 1rem));
+  font-family:'Lexend','Helvetica Neue',Arial,sans-serif; font-size:.78rem; color:#1c1b17; background:#fffdf8;
+  border:1px solid #d4cfc2; border-radius:8px; padding:.35rem .6rem; box-shadow:0 .4rem 1.2rem rgba(0,0,0,.12);
+  opacity:0; transform:translateY(.25rem); transition:opacity .2s ease, transform .2s ease; pointer-events:none; white-space:pre-wrap}
+#grok-tab.on{opacity:1; transform:none}
+body.grok.og #grok-tab{font-family:'Consolas',ui-monospace,monospace; color:#c9f5d6; background:#0a100c; border-color:#1f9c4d}
+body:has(#device-feed.full) #grok-tab{display:none}
+@media (prefers-reduced-motion:reduce){ #grok-tab{transition:none} }

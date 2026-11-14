@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HMI-2000 Operator's Manual</title>
+<!-- Served by Caddy off grokwell-hmi itself (/srv/www/manual/). Deliberately
+     antiquated: a late-90s vendor manual nobody has touched since install.
+     Its maintenance-password section is the in-game source of the spokes'
+     factory-default sudo password. The one page NOT in Lexend: Consolas, for the
+     dated look (per the user). -->
+<style>
+  :root{
+    --desk:#c0c0c0; --paper:#ffffff; --ink:#000000; --link:#0000ee; --visited:#551a8b;
+    --navy:#000080; --teal:#008080; --hilite:#ffff00; --red:#cc0000;
+    --bevel-lt:#ffffff; --bevel-dk:#808080; --bevel-xdk:#404040;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:Consolas,'Lucida Console','Courier New',monospace; color:var(--ink); background:var(--desk);
+    font-size:14px; line-height:1.45; padding:10px}
+  a{color:var(--link)} a:visited{color:var(--visited)}
+  .page{max-width:760px; margin:0 auto; background:var(--paper); padding:12px 14px 18px;
+    border:2px solid; border-color:var(--bevel-lt) var(--bevel-xdk) var(--bevel-xdk) var(--bevel-lt)}
+  .banner{background:var(--navy); color:#fff; text-align:center; padding:10px 6px 8px;
+    border:3px ridge #c0c0c0}
+  .banner .co{font-weight:800; letter-spacing:.32em; font-size:13px; color:var(--hilite)}
+  .banner h1{margin:4px 0 2px; font-size:clamp(17px,4.6vw,24px); font-weight:800; letter-spacing:.02em}
+  .banner .doc{font-size:11px; color:#c0c0ff}
+  .ticker{margin:8px 0; background:#000; color:#00ff00; border:2px inset #c0c0c0;
+    overflow:hidden; white-space:nowrap; font-size:12px; font-weight:700; padding:3px 0}
+  .ticker span{display:inline-block; padding-left:100%; animation:crawl 18s linear infinite}
+  @keyframes crawl{to{transform:translateX(-100%)}}
+  .new{color:var(--red); font-weight:800; animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{visibility:hidden}}
+  hr{border:0; border-top:2px groove #c0c0c0; margin:12px 0}
+  h2{font-size:16px; color:var(--navy); margin:16px 0 6px; padding:2px 6px;
+    background:linear-gradient(90deg,#c0c0ff,#fff)}
+  table{border-collapse:separate; border-spacing:2px; border:2px outset #c0c0c0; width:100%; font-size:13px}
+  th,td{border:1px inset #c0c0c0; padding:4px 6px; text-align:left; vertical-align:top}
+  th{background:var(--teal); color:#fff}
+  ol.toc{columns:2; column-gap:18px; margin:4px 0; padding-left:22px}
+  .warn{border:3px double var(--red); background:#ffffe0; padding:8px 10px; margin:10px 0}
+  .warn b{color:var(--red)}
+  .pw{font-weight:800; background:var(--hilite); padding:0 4px; border:1px dashed #000}
+  .construction{height:14px; margin:14px 0 6px;
+    background:repeating-linear-gradient(45deg,#ffd700 0 12px,#000 12px 24px)}
+  .construction + p{text-align:center; font-size:12px; font-weight:700; margin:0}
+  footer{margin-top:12px; text-align:center; font-size:11px; color:#333}
+  .counter{display:inline-block; background:#000; color:#ff2020; font-weight:700;
+    letter-spacing:.2em; padding:1px 5px; border:2px inset #c0c0c0}
+  .btn{display:inline-block; background:#c0c0c0; color:#000; text-decoration:none; padding:2px 8px;
+    border:2px outset #e0e0e0; font-size:12px}
+  @media (prefers-reduced-motion:reduce){ .ticker span,.new{animation:none} .ticker span{padding-left:6px} }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="banner">
+    <div class="co">GROKWELL INDUSTRIES</div>
+    <h1>Grokwell HMI-2000 Operator's Manual</h1>
+    <div class="doc">Document GW-HMI-2000-OM &middot; Revision B &middot; March 1999</div>
+  </div>
+
+  <div class="ticker"><span>*** NEW!! Revision B is now Y2K COMPLIANT *** Interface with confidence into the next millennium *** Ask your Grokwell representative about the HMI-2000 Turbo Upgrade Kit ***</span></div>
+
+  <p><span class="new">NEW!</span> Welcome to the on-line edition of the HMI-2000 Operator's Manual. This page is stored directly on your HMI-2000 unit for your convenience, so you will always have it even if you lose the binder.</p>
+
+  <h2>Table of Contents</h2>
+  <ol class="toc">
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#unpack">Unpacking</a></li>
+    <li><a href="#power">Power-Up</a></li>
+    <li><a href="#touch">Touchscreen Operation</a></li>
+    <li><a href="#maint">Maintenance Mode</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+    <li><a href="#warranty">Warranty</a></li>
+  </ol>
+
+  <hr>
+
+  <h2 id="intro">1. Introduction</h2>
+  <p>Congratulations on your purchase of the Grokwell HMI-2000! The HMI-2000 provides the operator a full-color, 256-color window into the prefabulated amulite of your Grokwell process installation. Gone are the days of reading the reciprocation dingle arm by hand.</p>
+  <p>The HMI-2000 communicates with your process equipment using the industry-standard Modbus protocol, which requires no password and therefore can never be locked out. This is a feature.</p>
+
+  <h2 id="unpack">2. Unpacking</h2>
+  <p>Remove the unit from its foam. Retain the foam. Grokwell cannot honor warranty claims on units shipped back without the original foam. Inspect the cathode panel for cracks, smudges, or evidence of a previous owner.</p>
+
+  <h2 id="power">3. Power-Up</h2>
+  <p>Apply power. Allow <b>90 seconds</b> for the cathode panel to reach operating temperature. A faint hum and the smell of warm dust are normal. If the unit plays a tune, it was not supposed to.</p>
+
+  <h2 id="touch">4. Touchscreen Operation</h2>
+  <table>
+    <tr><th>Button</th><th>Function</th></tr>
+    <tr><td>RUN</td><td>Engages the lunar waneshaft. Press firmly. Do not jab.</td></tr>
+    <tr><td>STOP</td><td>Disengages the waneshaft. Please allow it to finish its thought.</td></tr>
+    <tr><td>FWD / REV</td><td>Sets the direction of the drive. REV is disabled on metro-rail installations, for obvious reasons.</td></tr>
+    <tr><td>SPEED</td><td>Slide up for faster. Slide down for slower. The slider goes to 11 but please do not.</td></tr>
+  </table>
+
+  <h2 id="maint">5. Maintenance Mode</h2>
+  <p>Some service tasks (installing panel splash screens, restarting display services, and similar) require the maintenance password. For your convenience, <b>every</b> HMI-2000 and every companion unit leaves the factory with the same password, so your technician never has to look it up:</p>
+  <table>
+    <tr><th>Setting</th><th>Factory Default</th></tr>
+    <tr><td>Operator account</td><td>(set by your integrator)</td></tr>
+    <tr><td>Maintenance password</td><td><span class="pw">grokwell99</span></td></tr>
+  </table>
+  <div class="warn"><b>IMPORTANT!!</b> Grokwell strongly recommends changing the maintenance password at installation. Please note that changing it will void your warranty (see <a href="#warranty">Section 7</a>).</div>
+
+  <h2 id="trouble">6. Troubleshooting</h2>
+  <table>
+    <tr><th>Symptom</th><th>Remedy</th></tr>
+    <tr><td>Panel is blank</td><td>Wait 90 seconds. Then wait 90 more.</td></tr>
+    <tr><td>Panel shows text in an unexpected language</td><td>The unit may have been set to an export locale. Contact your Grokwell representative.</td></tr>
+    <tr><td>Train moves when nobody pressed RUN</td><td>This is not covered by the HMI-2000. Please consult the manual for your train.</td></tr>
+    <tr><td>Unit asks for a password you do not know</td><td>See <a href="#maint">Section 5</a>. It is the same everywhere.</td></tr>
+  </table>
+
+  <h2 id="warranty">7. Warranty</h2>
+  <p>Grokwell Industries warrants the HMI-2000 against defects in materials and workmanship for a period of ninety (90) days. The warranty is void if the unit is opened, dropped, connected to the Information Superhighway, or if the factory maintenance password is changed.</p>
+
+  <div class="construction"></div>
+  <p>This page is UNDER CONSTRUCTION. Revision C coming soon!</p>
+
+  <hr>
+  <footer>
+    <a class="btn" href="#">&lt;&lt; Back to Top</a><br><br>
+    Best viewed with Netscape Navigator 4.0 or Internet Explorer 4.0 at 800&times;600.<br>
+    You are visitor number <span class="counter">000413</span><br>
+    Last updated 03/14/99 &middot; &copy; 1999 Grokwell Industries &middot; Send comments to the Webmaster
+  </footer>
+</div>
+</body>
+</html>

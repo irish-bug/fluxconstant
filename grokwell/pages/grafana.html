@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grafana · SOC overview</title>
+<style>
+  @font-face {
+    font-family: 'Lexend';
+    src: url('fonts/Lexend-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root{
+    --bg:#111217; --panel:#181b1f; --line:#2a2d33; --ink:#d8d9da; --dim:#9fa2a8; --faint:#6e7177;
+    --orange:#f2994a; --red:#e0475b; --green:#56a64b; --blue:#5794f2;
+    --mono:'Consolas','SF Mono',ui-monospace,'Courier New',monospace;
+    --sans:'Lexend','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:var(--sans); color:var(--ink); background:var(--bg); font-size:13px}
+  .top{display:flex; align-items:center; gap:.7rem; padding:.55rem .9rem; border-bottom:1px solid var(--line); background:var(--panel)}
+  .logo{width:18px; height:18px; border-radius:50%; background:conic-gradient(var(--orange),#f2cc0c,var(--orange))}
+  .crumb{color:var(--dim)} .crumb b{color:var(--ink); font-weight:600}
+  .who{margin-left:auto; color:var(--faint); font-size:.75rem}
+  .range{border:1px solid var(--line); border-radius:4px; padding:.15rem .5rem; color:var(--dim); font-size:.75rem}
+  .wrap{padding:.8rem; display:grid; gap:.8rem}
+  .row3{display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:.8rem}
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:.6rem .7rem; min-width:0}
+  .panel h3{margin:0 0 .5rem; font-size:.78rem; font-weight:500; color:var(--dim)}
+  .stat{font-size:1.6rem; font-weight:600}
+  .stat small{font-size:.7rem; color:var(--faint); font-weight:400; margin-left:.3rem}
+  .ok{color:var(--green)} .warn{color:var(--orange)} .bad{color:var(--red)}
+  .chart{display:flex; align-items:flex-end; gap:2px; height:90px; border-bottom:1px solid var(--line); padding-top:.3rem}
+  .chart i{flex:1; background:var(--blue); opacity:.75; min-height:2px}
+  .axis{display:flex; justify-content:space-between; color:var(--faint); font-size:.68rem; margin-top:.25rem; font-family:var(--mono)}
+  table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.72rem}
+  th{color:var(--faint); font-weight:400; text-align:left; padding:.25rem .35rem; border-bottom:1px solid var(--line)}
+  td{padding:.25rem .35rem; border-bottom:1px solid #202328; vertical-align:top}
+  td.n{text-align:right}
+  .sev{display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.3rem}
+  .s1{background:var(--red)} .s2{background:var(--orange)} .s3{background:var(--blue)}
+  .note{color:var(--faint); font-size:.72rem; margin-top:.4rem}
+  code{font-family:var(--mono); color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="logo"></div>
+  <div class="crumb">Dashboards / SOC / <b>SOC overview</b></div>
+  <span class="range">Last 6 hours</span>
+  <div class="who">admin · session restored</div>
+</div>
+
+<div class="wrap">
+  <div class="row3">
+    <div class="panel"><h3>Suricata</h3><div class="stat ok">running<small>suricata.service</small></div></div>
+    <div class="panel"><h3>Alerts, last 6 h</h3><div class="stat warn">41,940</div></div>
+    <div class="panel"><h3>Capture tap</h3><div class="stat ok">recording<small>10-min files</small></div></div>
+    <div class="panel"><h3>Grafana TLS cert</h3><div class="stat warn">3 days<small>to expiry</small></div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Packets per minute, control network (all ports)</h3>
+    <div class="chart" aria-label="packets per minute">
+      <i style="height:22%"></i><i style="height:21%"></i><i style="height:23%"></i><i style="height:22%"></i><i style="height:22%"></i><i style="height:24%"></i><i style="height:22%"></i><i style="height:21%"></i><i style="height:22%"></i><i style="height:23%"></i><i style="height:22%"></i><i style="height:22%"></i>
+      <i style="height:23%"></i><i style="height:22%"></i><i style="height:21%"></i><i style="height:22%"></i><i style="height:25%"></i><i style="height:22%"></i><i style="height:23%"></i><i style="height:22%"></i><i style="height:22%"></i><i style="height:21%"></i><i style="height:22%"></i><i style="height:22%"></i>
+      <i style="height:23%"></i><i style="height:22%"></i><i style="height:22%"></i><i style="height:27%"></i><i style="height:22%"></i><i style="height:23%"></i><i style="height:22%"></i><i style="height:22%"></i>
+      <i style="height:96%"></i><i style="height:98%"></i><i style="height:97%"></i><i style="height:99%"></i><i style="height:98%"></i><i style="height:97%"></i><i style="height:98%"></i><i style="height:96%"></i>
+    </div>
+    <div class="axis"><span>21:40</span><span>23:00</span><span>00:20</span><span>01:40</span><span>03:00</span><span>now</span></div>
+  </div>
+
+  <div class="panel">
+    <h3>Suricata alerts (eve.json), newest last</h3>
+    <table>
+      <tr><th>first seen</th><th>signature</th><th>src</th><th>dst</th><th class="n">count</th></tr>
+      <tr><td>21:47:10</td><td><span class="sev s3"></span>GPL ICMP_INFO PING *NIX</td><td>10.42.7.66</td><td>10.42.7.30</td><td class="n">4</td></tr>
+      <tr><td>23:18:02</td><td><span class="sev s3"></span>ET POLICY curl User-Agent</td><td>10.42.7.30</td><td>10.42.7.10:80</td><td class="n">1</td></tr>
+      <tr><td>02:12:56</td><td><span class="sev s3"></span>ET INFO NTP request (no reply)</td><td>10.42.7.10</td><td>10.42.7.255:123</td><td class="n">36</td></tr>
+      <tr><td>03:09:41</td><td><span class="sev s2"></span>ET POLICY SSH session to OT segment</td><td>10.42.7.30</td><td>10.42.7.20:22</td><td class="n">1</td></tr>
+      <tr><td>03:20:02</td><td><span class="sev s1"></span>MODBUS Write Multiple Registers -- abnormal rate</td><td>172.17.4.1</td><td>10.42.7.20:502</td><td class="n">41,877</td></tr>
+      <tr><td>03:31:15</td><td><span class="sev s3"></span>SURICATA STREAM ESTABLISHED retransmission</td><td>10.42.7.10</td><td>10.42.7.20:502</td><td class="n">21</td></tr>
+    </table>
+    <div class="note">Raw alert log: <code>/var/log/suricata/eve.json</code> on this box. The capture tap writes ten-minute files to the analyst's <code>~/evidence</code>, named by start time.</div>
+  </div>
+</div>
+</body>
+</html>
