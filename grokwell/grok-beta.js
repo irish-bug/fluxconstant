@@ -20,7 +20,7 @@
     ["shaker", "Stopped the shaker", /The register writes stop/],
     ["fwlog", "Read the firmware log", /Official channel first, came up empty/],
     ["marvin", "Found Marvin's note", /RkxBR3tCUkFJTl9USEVfU0laRV9PRl9BX1BMQU5FVH0=/],
-    ["decoded", "Decoded the passphrase", /FLAG\{BRAIN_THE_SIZE_OF_A_PLANET\}/],
+    ["decoded", "Decoded Marvin's note", /FLAG\{BRAIN_THE_SIZE_OF_A_PLANET\}/],
     ["cobalt", "Extracted Cobalt", /Marvin's note opens it/],
     ["released", "Flashed Cobalt; line handed back", /Bring it in from the HMI/],
     ["win", "Won", /FLAG\{NO_MORE_SHAKING\}/]
@@ -219,7 +219,6 @@
     '<button type="button" class="gb-pill" id="gb-open">Send feedback</button>' +
     '<div class="gb-panel" id="gb-panel" hidden role="dialog" aria-labelledby="gb-title">' +
       '<div class="gb-head"><h2 id="gb-title">Feedback</h2><button type="button" class="gb-x" id="gb-close" aria-label="Close">×</button></div>' +
-      '<p class="gb-far">Furthest so far: <b id="gb-far"></b></p>' +
       '<label for="gb-fb">Where did you get stuck, or what confused you?</label>' +
       '<textarea id="gb-fb" rows="5" placeholder="Anything helps: a puzzle you couldn’t crack, a command you expected to work, a bug, a line you liked."></textarea>' +
       '<label for="gb-name">Your name (optional)</label>' +
@@ -275,7 +274,6 @@
   function refocus() { var i = document.querySelector("#vorple input"); if (i) i.focus(); }
   function open() {
     $("gb-notice").hidden = true;
-    $("gb-far").textContent = summary().furthest + (run.outcome ? " (" + run.outcome + ")" : "");
     var n = run.notes.length;
     $("gb-status").textContent = n ? "Sent so far: " + n + (n > 1 ? " notes" : " note") + ". Add another any time." : "";
     $("gb-panel").hidden = false;

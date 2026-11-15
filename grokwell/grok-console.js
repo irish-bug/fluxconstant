@@ -34,7 +34,7 @@
     function plcView(ok, stalled) {
       var rows = "";
       for (var i = 0; i < 14; i++) rows += '<div class="reg"><span class="a">%MW' + (100 + i) + '</span><span class="v" data-i="' + i + '">0</span></div>';
-      stage.innerHTML = '<div class="plc' + (ok ? " ok" : "") + '"><div class="plc-h">OpenPLC \u00B7 holding registers \u00B7 :502</div>' +
+      stage.innerHTML = '<div class="plc' + (ok ? " ok" : "") + '"><div class="plc-h">Grokwell PLC \u00B7 holding registers \u00B7 :502</div>' +
         (stalled ? '<div class="plc-stall">\u25A0 OPERATIONS HOLD \u2014 motor enable 0, set from the HMI</div>'
          : ok ? '<div class="plc-ok">\u2713 writes from the HMI only</div>' : '') +
         '<div class="regs">' + rows + '</div><div class="plc-log" id="grok-plclog"></div></div>';
@@ -364,17 +364,36 @@
           }
         })();
       }
-      // docker-pull-style layers filling up, until the cut
+      // docker's layer bars filling up, until the cut: a pull fills them together, a load
+      // (P.style "load") one layer at a time and leaves each full bar on screen
       function progress(P, done) {
-        var bars = P.layers.map(function (id) { return { id: id, f: 0, v: 0.04 + Math.random() * 0.1 }; }), base = hist.length, t0 = performance.now();
+        var load = P.style === "load", base = hist.length, t0 = performance.now();
+        if (P.style === "scp") {          // one scp line climbing to 100%, a beat, then on
+          var ms = P.ms || 3000;
+          (function tickScp() {
+            if (!endOn) return;
+            hist.length = base;
+            var f = Math.min(1, (performance.now() - t0) / ms);
+            hist.push((P.file + new Array(47).join(" ")).slice(0, 46) + ("   " + Math.round(f * 100)).slice(-3) + "%" +
+              ("     " + Math.round(f * P.mb)).slice(-5) + "MB  10.4MB/s   00:0" +
+              (f < 1 ? Math.max(1, Math.ceil((1 - f) * ms / 1000)) + " ETA" : Math.ceil(ms / 1000)));
+            draw();
+            if (f < 1) later(tickScp, 160); else later(done, 900);
+          })();
+          return;
+        }
+        var bars = P.layers.map(function (id, i) {
+          return { id: id, f: 0, v: 0.04 + Math.random() * 0.1, mb: [].concat(P.mb)[i] || [].concat(P.mb)[0] };
+        });
         (function tick() {
           if (!endOn) return;
           hist.length = base;
-          bars.forEach(function (b) {
-            b.f = Math.min(1, b.f + b.v * Math.random());
-            var w = 50, n = Math.round(b.f * w);
-            hist.push(b.f >= 1 ? b.id + ": Download complete"
-              : b.id + ": Downloading [" + new Array(n + 1).join("=") + ">" + new Array(w - n).join(" ") + "]  " + (b.f * P.mb).toFixed(1) + "MB/" + P.mb + "MB");
+          bars.forEach(function (b, i) {
+            if (load && i && bars[i - 1].f < 1) return;
+            b.f = Math.min(1, b.f + b.v * Math.random() * (load ? 2 : 1));
+            var w = 50, n = Math.round(b.f * w),
+                bar = "[" + new Array(n + 1).join("=") + ">" + new Array(w - n).join(" ") + "]  " + (b.f * b.mb).toFixed(1) + "MB/" + b.mb + "MB";
+            hist.push(load ? b.id + ": Loading layer " + bar : b.f >= 1 ? b.id + ": Download complete" : b.id + ": Downloading " + bar);
           });
           draw();
           if (performance.now() - t0 < (P.ms || 5000)) later(tick, 160); else done();
@@ -487,12 +506,12 @@
       "page:flux-agent-quickstart": ["flux-agent · quickstart", "ok"],
       "page:flux-vector-quickstart": ["flux-vector · quickstart", "ok"],
       "page:hmi-manual": ["grokwell-hmi · operator's manual (1999)", "ok"],
-      plc: ["motion-control · openplc", ""],
+      plc: ["motion-control · grokwell plc", ""],
       "page:grafana": ["secops · grafana · soc overview", "ok"],
-      "plc-ok": ["motion-control · openplc · nominal", "ok"],
+      "plc-ok": ["motion-control · grokwell plc · nominal", "ok"],
       "train-calm": ["metro-rail · holding at market station", "ok"],
       "train-stranded": ["metro-rail · held in the field", "warn"],
-      "plc-stalled": ["motion-control · openplc · operations hold", "warn"],
+      "plc-stalled": ["motion-control · grokwell plc · operations hold", "warn"],
       "hmi-stalled": ["grokwell-hmi · operations hold", "warn"],
       hmi: ["grokwell-hmi · erratic", "bad"],
       "hmi-ok": ["grokwell-hmi · nominal", "ok"],

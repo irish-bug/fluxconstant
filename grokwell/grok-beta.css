@@ -38,8 +38,6 @@ body.og #grok-beta{
 .gb-head{display:flex; align-items:center; justify-content:space-between}
 .gb-head h2{margin:0; font-size:1rem; font-weight:600}
 .gb-x{border:0; background:transparent; color:var(--gb-dim); font-size:1.3rem !important; line-height:1; padding:0 .2rem}
-.gb-far{margin:0; font-size:.8rem; color:var(--gb-dim)}
-.gb-far b{color:var(--gb-ink); font-weight:600}
 .gb-panel label{font-size:.75rem; letter-spacing:.02em; color:var(--gb-dim); margin-top:.2rem}
 .gb-panel textarea,.gb-panel input{
   font:inherit; font-size:.85rem; color:var(--gb-ink); background:transparent;

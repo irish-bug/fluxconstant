@@ -8,11 +8,15 @@
    GROK_EPILOGUE is then typed onto that same screen, after the clip ends (DESIGN.md,
    "Epilogue"): she logs into SecOps as boss-lady with her own backdoor key, uses sudo vim to
    copy that key -- minus its give-away comment -- into root's authorized_keys and delete it
-   from boss-lady's, then comes back in as root and hops to motion-control to pull stage 2.
+   from boss-lady's. Then stage 2: after the player's reflash, motion-control has no sshd or
+   Docker (both came with Luna), so she copies a Luna 2.0 image from her laptop to SecOps as
+   root and on to the Flux Agent's firmware store with boss-lady's own key; the Agent flashes
+   motion-control over the serial link. It cuts as the copy lands (user's call, 2026-11-15).
    Each entry is typed at the prompt key by key, then:
      out      lines printed after Enter          prompt  the prompt from then on
      vim      a vim session (lines, info, keys)  pause   ms to wait before the next entry
-     progress docker-pull-style layers           cut     hard cut to black: the end
+     progress a copy or docker bars: style "scp"  cut     hard cut to black: the end
+              (file, mb, ms), "load" or a pull
    Keys are made up; their endings match what the player can cat in act 2. */
 window.GROK_SCREEN = {
   prompt: "d4rks33k@ohreally:~$ ",
@@ -45,7 +49,7 @@ window.GROK_SCREEN = {
 var BL_KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIpTyGJMuHbEL31IeL2HPcHyGcFRl1SPnXNYvQoph8tx3",
     DS_KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIHa/2o76umfXfKm/r5kJP1VrT+1FJors/69fL1kR2v";
 window.GROK_EPILOGUE = [
-  { type: "ssh -i ~/.ssh/id_backup boss-lady@10.42.7.30", pause: 900,
+  { type: "ssh -i ~/.ssh/id_backup boss-lady@secops", pause: 900,
     prompt: "boss-lady@SecOps:~$ " },
   { type: "sudo vim ~/.ssh/authorized_keys", pause: 900,
     vim: {
@@ -59,14 +63,18 @@ window.GROK_EPILOGUE = [
         { dd: 1 },                                                 // and gone from boss-lady's
         { cmd: ":wq", pause: 300 }
       ] } },
-  { type: "exit", out: "logout\nConnection to 10.42.7.30 closed.", pause: 900,
+  { type: "exit", out: "logout\nConnection to secops closed.", pause: 900,
     prompt: "d4rks33k@ohreally:~$ " },
-  { type: "ssh root@10.42.7.30", pause: 900, prompt: "root@SecOps:~# " },
+  // Stage 2 rides in the way she got in: SecOps is dual-homed (Kylie's unofficial
+  // work-from-home jump box, not on the network map). "secops" is her own name for the public
+  // address the LTE modem forwards to it (the one in player1's dispatch), so no IP shows. Root on SecOps, then boss-lady's own key
+  // to the Agent ("agent" in her ssh config). Each line stays under the screen's ~98 columns.
+  { type: "scp ~/.fw/FLX-8.8-Luna2.0.enc root@secops:/tmp/",
+    out: "FLX-8.8-Luna2.0.enc                           100%   23MB  10.4MB/s   00:02", pause: 900 },
+  { type: "ssh root@secops", pause: 900, prompt: "root@SecOps:~# " },
   { type: "unset HISTFILE", pause: 700 },
-  { type: "ssh -i /home/boss-lady/.ssh/id_backup mover@10.42.7.20", pause: 900, prompt: "mover@motion-control:~$ " },
-  { type: "unset HISTFILE", pause: 700 },
-  { type: "docker pull darkseek/stage2:latest", out: "latest: Pulling from darkseek/stage2", gap: 400,
-    progress: { layers: ["4f3a9c21d0be", "b81e07c6a952", "e2d5f8a1c370"], mb: 48.3, ms: 5200 }, cut: true }
+  { type: "su boss-lady -c 'scp /tmp/FLX-8.8-Luna2.0.enc agent:/opt/grokwell/firmware/'",
+    progress: { style: "scp", file: "FLX-8.8-Luna2.0.enc", mb: 23, ms: 3000 }, cut: true }
 ];
 
 /* The footage between the in-engine push-in and the laptop screen, and how its screen text
