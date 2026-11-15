@@ -29,7 +29,8 @@
   .panel{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:.6rem .7rem; min-width:0}
   .panel h3{margin:0 0 .5rem; font-size:.78rem; font-weight:500; color:var(--dim)}
   .stat{font-size:1.6rem; font-weight:600}
-  .stat small{font-size:.7rem; color:var(--faint); font-weight:400; margin-left:.3rem}
+  .stat{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .stat small{display:block; font-size:.7rem; color:var(--faint); font-weight:400; margin-top:.15rem; overflow:hidden; text-overflow:ellipsis}
   .ok{color:var(--green)} .warn{color:var(--orange)} .bad{color:var(--red)}
   .chart{display:flex; align-items:flex-end; gap:2px; height:90px; border-bottom:1px solid var(--line); padding-top:.3rem}
   .chart i{flex:1; background:var(--blue); opacity:.75; min-height:2px}

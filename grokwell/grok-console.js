@@ -671,6 +671,26 @@
       })();
     })();
 
+    // Keep password managers off the command line. Vorple's prompt is a <label for> the
+    // input, so at "analyst@...'s password:" Bitwarden reads the field as a password field
+    // (it matches "password" in the label text) and then offers to save every command.
+    // Unhooking the label keeps the prompt on screen but out of the field's labels.
+    (function noPasswordManagers() {
+      function unhook() {
+        var f = document.getElementById("lineinput-field"), p = document.getElementById("lineinput-prefix");
+        if (!f) return false;
+        if (p && p.hasAttribute("for")) p.removeAttribute("for");
+        f.setAttribute("aria-label", "command");
+        f.setAttribute("data-bwignore", "true");
+        f.setAttribute("data-1p-ignore", "true");
+        f.setAttribute("data-lpignore", "true");
+        f.setAttribute("data-form-type", "other");
+        return true;
+      }
+      (function wait() { if (!unhook()) requestAnimationFrame(wait); })();
+      document.addEventListener("submit", unhook, true);
+    })();
+
     window.grokFeed("train");
   }
 
