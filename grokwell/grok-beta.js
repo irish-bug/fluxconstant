@@ -14,13 +14,13 @@
 (function () {
   var STAGES = [   // in story order; the furthest one reached is the run's headline
     ["login", "Logged into SecOps", /Last login: yesterday, 17:52/],
-    ["boss", "Became boss-lady", /You are boss-lady now/],
+    ["boss", "Became boss-lady", /You are boss-lady now|Sorry Kylie! I might be impersonating you/],
     ["mover", "Reached motion-control", /Grokwell motion firmware:/],
     ["netcheck", "Stopped the watchdog", /The watchdog's down/],
     ["shaker", "Stopped the shaker", /The register writes stop/],
     ["fwlog", "Read the firmware log", /Official channel first, came up empty/],
-    ["marvin", "Found Marvin's note", /RkxBR3tCUkFJTl9USEVfU0laRV9PRl9BX1BMQU5FVH0=/],
-    ["decoded", "Decoded Marvin's note", /FLAG\{BRAIN_THE_SIZE_OF_A_PLANET\}/],
+    ["marvin", "Found Marvin's note", /TXlUcmFpbk5vdzEyMyE=/],
+    ["decoded", "Decoded Marvin's note", /MyTrainNow123!/],
     ["cobalt", "Extracted Cobalt", /Marvin's note opens it/],
     ["released", "Flashed Cobalt; line handed back", /Bring it in from the HMI/],
     ["win", "Won", /FLAG\{NO_MORE_SHAKING\}/]
