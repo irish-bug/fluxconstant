@@ -49,7 +49,7 @@
       }
       live(function () {
         for (var k = 0; k < vs.length; k++) if (k < 3 || Math.random() < 0.3) vs[k].textContent = k === 0 || k === 1 ? rnd(2) : rnd(k === 2 ? 101 : 65536);
-        lines.unshift("WRITE  fc16  %MW10" + rnd(3) + " \u2190 " + rnd(101) + "   src 127.0.0.1:" + (40000 + rnd(9999)));
+        lines.unshift("WRITE  fc16  %MW10" + rnd(3) + " \u2190 " + rnd(101) + "   src 172.17.4.1:40112");
         lines = lines.slice(0, 9); log.textContent = lines.join("\n");
       }, 140);
     }
