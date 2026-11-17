@@ -34,6 +34,20 @@ body.grok #vorple .prompt-input{font-family:inherit !important; color:inherit !i
    (invisible on the OG view's black) */
 body.grok #vorple #lineinput-prefix{font:inherit !important; color:inherit !important}
 
+/* ls listings (grokLs in grok-console.js): grids, so the columns line up in Lexend too.
+   Gaps about a space wide between ls -l fields and two between plain names, as in a real
+   terminal. In a narrow window the name column wraps rather than running off the edge. */
+body.grok #output .grok-ls{white-space:pre}
+body.grok #output .grok-ls-rows{display:grid; grid-template-columns:repeat(8, max-content) minmax(6ch, max-content); column-gap:.55ch}
+body.grok #output .grok-ls-rows .r{text-align:right}
+body.grok #output .grok-ls-rows .n{white-space:pre-wrap; overflow-wrap:anywhere}
+body.grok #output .grok-ls-rows .all{grid-column:1 / -1}
+body.grok #output .grok-ls-cols{display:grid; grid-auto-flow:column; grid-auto-columns:max-content; column-gap:1.4ch; justify-content:start; overflow:hidden}
+
+/* Web links in the transcript (show link): the laptop's sudo rant. */
+body.grok #output a.grok-weblink{color:#1f7a70; text-decoration:underline; text-underline-offset:2px}
+body.grok.og #output a.grok-weblink{color:#1fe05a}
+
 /* --- OG terminal skin (green Consolas on black) --- */
 body.grok.og #vorple{background:#050806}
 body.grok.og #output{

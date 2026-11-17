@@ -544,6 +544,55 @@
       window.grokSlow = function () { if (!busy) next(); };
     })();
 
+    // ls (Grokwell Visuals' show listing): Inform prints the listing already sorted and padded
+    // for a monospace font. Lexend isn't one, so lay each listing out as a grid instead: ls -l
+    // as one row per entry with the link count, size and day right-aligned (the time stays
+    // left: Lexend's digits differ in width, so 03:10 drifts from 03:00 when right-aligned),
+    // plain ls as names filled down the columns, using as few rows as fit, like GNU ls.
+    (function () {
+      var LONG = /^(\S+)\s+(\d+)\s+(\S+)\s+(\S+)\s+(\d+)\s+(\S+)\s+(\d+)\s+(\S+)\s(.*)$/;
+      var RIGHT = { 1: 1, 4: 1, 6: 1 };
+      function fit(grid) {
+        var n = grid.children.length;
+        for (var rows = 1; rows <= n; rows++) {
+          grid.style.gridTemplateRows = "repeat(" + rows + ", auto)";
+          if (grid.scrollWidth <= grid.clientWidth) return;
+        }
+      }
+      window.grokLs = function () {
+        Array.prototype.slice.call(document.querySelectorAll(".grok-ls:not(.grok-ls-done)")).forEach(function (el) {
+          el.classList.add("grok-ls-done");
+          var lines = el.textContent.split("\n").filter(function (l) { return l.trim(); });
+          var grid = document.createElement("div"), long = el.classList.contains("grok-ls-long");
+          grid.className = long ? "grok-ls-rows" : "grok-ls-cols";
+          if (long) {
+            lines.forEach(function (l) {
+              var m = LONG.exec(l), cells = m ? m.slice(1) : [l];
+              cells.forEach(function (c, i) {
+                var s = document.createElement("span");
+                s.textContent = c;
+                if (!m) s.className = "all"; else if (RIGHT[i]) s.className = "r"; else if (i === 8) s.className = "n";
+                grid.appendChild(s);
+              });
+            });
+          } else {
+            lines.join(" ").split(/\s+/).filter(Boolean).forEach(function (name) {
+              var s = document.createElement("span");
+              s.textContent = name;
+              grid.appendChild(s);
+            });
+          }
+          el.textContent = "";
+          el.appendChild(grid);
+          if (!long) fit(grid);
+        });
+      };
+      function refit() { Array.prototype.forEach.call(document.querySelectorAll(".grok-ls-cols"), fit); }
+      var pending = 0;
+      window.addEventListener("resize", function () { cancelAnimationFrame(pending); pending = requestAnimationFrame(refit); });
+      window.grokLsRefit = refit;
+    })();
+
     window.grokFeed = function (view) {
       view = String(view || "train");
       if (window.GrokTrain) window.GrokTrain.destroy();   // stop the train RAF when switching away
@@ -581,6 +630,7 @@
       btn.setAttribute("aria-pressed", on ? "true" : "false");
       label.textContent = on ? "Clean view" : "OG terminal view";
       try { localStorage.setItem("grokwell-og", on ? "1" : "0"); } catch (e) {}
+      if (window.grokLsRefit) window.grokLsRefit();   // names are wider in Consolas
     }
     var init = false;
     try { init = localStorage.getItem("grokwell-og") === "1"; } catch (e) {}
